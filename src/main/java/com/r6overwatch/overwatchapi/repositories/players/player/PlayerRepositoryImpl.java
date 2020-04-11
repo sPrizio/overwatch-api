@@ -47,9 +47,9 @@ public class PlayerRepositoryImpl implements PlayerRepositoryCustom {
         String queryString =
                 "SELECT p.id, p.alias, p.name, pss.wins, pss.losses, pss.kills, pss.assists, pss.deaths, " +
                 "       (pss.kills / NULLIF(pss.deaths, 0)) as kd, (pss.wins / NULLIF((pss.wins + pss.losses), 0)) as wp, (pss.kills / NULLIF((pss.wins + pss.losses), 0)) as kpg, (pss.kills / NULLIF((pss.wins + pss.losses), 0)) as dpg " +
-                "FROM player as p, player_seasons as pss, player_player_seasons as rel " +
+                "FROM player as p, player_season_statistics as pss, player_player_seasons as rel " +
                 "WHERE p.id = rel.player_id" +
-                "   AND pss.id = rel.player_season_statistics_id " +
+                "   AND pss.id = rel.player_seasons_id " +
                 "   AND pss.season_id = " + season.getId() + " " +
                 "ORDER BY " + attribute + " " + sortOrder.toString() + ";";
 
