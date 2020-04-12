@@ -10,6 +10,9 @@ import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.resources.entities.players.PlayerResource;
 import com.r6overwatch.overwatchapi.services.nonentities.enums.EnumService;
 import com.r6overwatch.overwatchapi.utils.OverwatchUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -27,6 +30,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/player")
+@Api(description = "Handles all operations relating to a player and/or players in the system")
 public class PlayerApiController extends AbstractOverwatchController<PlayerResource> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerApiController.class);
@@ -49,6 +53,7 @@ public class PlayerApiController extends AbstractOverwatchController<PlayerResou
      * @return json response with data based on whether the {@link Player} was found
      */
     @GetMapping("/{code}")
+    @ApiOperation("Fetches a player by player code")
     public StandardJsonResponse getPlayer(final @PathVariable("code") String code) {
 
         Long id = OverwatchUtils.parseLong(code);
@@ -67,6 +72,7 @@ public class PlayerApiController extends AbstractOverwatchController<PlayerResou
      * @return list of all {@link Player}s
      */
     @GetMapping("/all")
+    @ApiOperation("Fetches all players in the system")
     public StandardJsonResponse getAllPlayers() {
         return new StandardJsonResponse(true, this.playerFacade.findAll(), StringUtils.EMPTY);
     }
@@ -81,11 +87,12 @@ public class PlayerApiController extends AbstractOverwatchController<PlayerResou
      * @return {@link List} of {@link Player}s sorted by attribute in the given order for the squad and season
      */
     @GetMapping("/players")
+    @ApiOperation("Fetches players by their squad and for a specific season. The return list is sorted by the given attribute and sort code (ASC or DESC)")
     public StandardJsonResponse getAllPlayersForTeamAndSeasonAndAttributeSorted(
-            final @RequestParam("squadCode") String squadCode,
-            final @RequestParam("seasonCode") String seasonCode,
-            final @RequestParam("attribute") String attribute,
-            final @RequestParam("sortCode") String sortCode
+            final @RequestParam("squadCode") @ApiParam("Code for the desired squad") String squadCode,
+            final @RequestParam("seasonCode") @ApiParam("Code of the season to be obtained") String seasonCode,
+            final @RequestParam("attribute") @ApiParam("Attribute that the player should be sorted by, ex: wins") String attribute,
+            final @RequestParam("sortCode") @ApiParam("Sort order: ASC or DESC") String sortCode
     ) {
         if (StringUtils.isEmpty(attribute)) {
             LOGGER.error("No attribute specified for sorting");

@@ -6,6 +6,9 @@ import com.r6overwatch.overwatchapi.facades.entities.season.SeasonFacade;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.resources.entities.season.SeasonResource;
 import com.r6overwatch.overwatchapi.utils.OverwatchUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/api/season")
+@Api(description = "Handles all operations relating to a season and/or seasons in the system")
 public class SeasonApiController extends AbstractOverwatchController<SeasonResource> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SeasonApiController.class);
@@ -40,6 +44,7 @@ public class SeasonApiController extends AbstractOverwatchController<SeasonResou
      * @return json response with data based on whether the {@link Season} was found
      */
     @GetMapping("/{code}")
+    @ApiOperation("Fetches a season by season code")
     public StandardJsonResponse getSeason(final @PathVariable("code") String code) {
 
         Long id = OverwatchUtils.parseLong(code);
@@ -58,6 +63,7 @@ public class SeasonApiController extends AbstractOverwatchController<SeasonResou
      * @return list of all {@link Season}s
      */
     @GetMapping("/all")
+    @ApiOperation("Fetches all seasons in the system")
     public StandardJsonResponse getAllSeasons() {
         return new StandardJsonResponse(true, this.seasonFacade.findAll(), StringUtils.EMPTY);
     }
@@ -68,6 +74,7 @@ public class SeasonApiController extends AbstractOverwatchController<SeasonResou
      * @return {@link SeasonResource} of today's closest season
      */
     @GetMapping("/current-season")
+    @ApiOperation("Fetches the current season, i.e. the season who's release date is closest to today's date")
     public StandardJsonResponse getCurrentSeason() {
         SeasonResource resource = this.seasonFacade.getCurrentSeason();
         if (resource.isPresent()) {
@@ -85,7 +92,11 @@ public class SeasonApiController extends AbstractOverwatchController<SeasonResou
      * @return {@link SeasonResource}
      */
     @GetMapping("/searchable")
-    public StandardJsonResponse getSeasonForNumberAndYear(final @RequestParam("seasonYear") String year, final @RequestParam("seasonNumber") String number) {
+    @ApiOperation("Fetches the season for the given season year and number, ex: 5 and 1 for Season Void Edge (Y5, S1)")
+    public StandardJsonResponse getSeasonForNumberAndYear(
+            final @RequestParam("seasonYear") @ApiParam("The year number from the start of siege (current year minus 2015)") String year,
+            final @RequestParam("seasonNumber") @ApiParam("The season number which roughly corresponds to the current quarter") String number
+    ) {
 
         Integer yearNum = OverwatchUtils.parseInteger(year);
         Integer numberNum = OverwatchUtils.parseInteger(number);
@@ -101,6 +112,6 @@ public class SeasonApiController extends AbstractOverwatchController<SeasonResou
         }
 
         LOGGER.error("One or more of the required params was null or empty: year {}, number {}", year, number);
-        return new StandardJsonResponse(false, number, "One or more of the required params was null or empty: year " + year + ", number " + number);
+        return new StandardJsonResponse(false, null, "One or more of the required params was null or empty: year " + year + ", number " + number);
     }
 }
