@@ -17,7 +17,7 @@ import java.time.LocalDate;
  * @version 1.0
  */
 @Component
-@Order(1)
+@Order(2)
 public class SeasonDataLoader implements CommandLineRunner {
 
     @Resource(name = "seasonRepository")

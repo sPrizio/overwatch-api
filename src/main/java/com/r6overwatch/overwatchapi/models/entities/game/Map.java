@@ -24,6 +24,6 @@ public class Map implements OverwatchEntity {
     @Getter
     @Setter
     @NonNull
-    @Column
+    @Column(unique = true)
     private String name;
 }

@@ -23,7 +23,7 @@ import java.util.Optional;
  * @version 1.0
  */
 @Component
-@Order(2)
+@Order(3)
 @SuppressWarnings("DuplicatedCode")
 public class PlayersDataLoader implements CommandLineRunner {
 
