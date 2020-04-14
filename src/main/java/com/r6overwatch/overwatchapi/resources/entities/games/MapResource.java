@@ -1,4 +1,4 @@
-package com.r6overwatch.overwatchapi.resources.entities.game;
+package com.r6overwatch.overwatchapi.resources.entities.games;
 
 import com.r6overwatch.overwatchapi.models.entities.games.Map;
 import com.r6overwatch.overwatchapi.resources.entities.OverwatchResource;

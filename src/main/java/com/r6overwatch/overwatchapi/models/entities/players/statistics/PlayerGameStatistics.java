@@ -33,6 +33,12 @@ public class PlayerGameStatistics implements OverwatchEntity {
     @Setter
     @Column
     @NonNull
+    private Integer score;
+
+    @Getter
+    @Setter
+    @Column
+    @NonNull
     private Integer kills;
 
     @Getter

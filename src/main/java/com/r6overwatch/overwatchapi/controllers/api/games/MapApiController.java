@@ -4,7 +4,7 @@ import com.r6overwatch.overwatchapi.controllers.AbstractOverwatchController;
 import com.r6overwatch.overwatchapi.controllers.response.StandardJsonResponse;
 import com.r6overwatch.overwatchapi.facades.entities.games.MapFacade;
 import com.r6overwatch.overwatchapi.models.entities.games.Map;
-import com.r6overwatch.overwatchapi.resources.entities.game.MapResource;
+import com.r6overwatch.overwatchapi.resources.entities.games.MapResource;
 import com.r6overwatch.overwatchapi.utils.OverwatchUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -2,7 +2,7 @@ package com.r6overwatch.overwatchapi.converters.entities.games;
 
 import com.r6overwatch.overwatchapi.converters.entities.OverwatchConverter;
 import com.r6overwatch.overwatchapi.models.entities.games.Map;
-import com.r6overwatch.overwatchapi.resources.entities.game.MapResource;
+import com.r6overwatch.overwatchapi.resources.entities.games.MapResource;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 

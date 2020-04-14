@@ -3,7 +3,7 @@ package com.r6overwatch.overwatchapi.facades.entities.games;
 import com.google.common.collect.Lists;
 import com.r6overwatch.overwatchapi.converters.entities.games.MapConverter;
 import com.r6overwatch.overwatchapi.facades.entities.OverwatchFacade;
-import com.r6overwatch.overwatchapi.resources.entities.game.MapResource;
+import com.r6overwatch.overwatchapi.resources.entities.games.MapResource;
 import com.r6overwatch.overwatchapi.services.entities.games.MapService;
 import org.springframework.stereotype.Component;
 

@@ -1,11 +1,11 @@
 package com.r6overwatch.overwatchapi.models.entities.games;
 
-import com.r6overwatch.overwatchapi.enums.MapResult;
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Class representation of a game between 2 teams
@@ -34,7 +34,7 @@ public class Game implements OverwatchEntity {
     @Setter
     @Column
     @NonNull
-    private MapResult result;
+    private LocalDateTime gameDateTime;
 
     @Getter
     @Setter
