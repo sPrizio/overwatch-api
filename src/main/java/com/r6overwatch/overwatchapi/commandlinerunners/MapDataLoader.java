@@ -1,8 +1,8 @@
 package com.r6overwatch.overwatchapi.commandlinerunners;
 
 import com.google.common.collect.Lists;
-import com.r6overwatch.overwatchapi.models.entities.game.Map;
-import com.r6overwatch.overwatchapi.repositories.game.MapRepository;
+import com.r6overwatch.overwatchapi.models.entities.games.Map;
+import com.r6overwatch.overwatchapi.repositories.games.map.MapRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

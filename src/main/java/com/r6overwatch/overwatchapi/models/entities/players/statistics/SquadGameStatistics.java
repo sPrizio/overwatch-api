@@ -2,7 +2,7 @@ package com.r6overwatch.overwatchapi.models.entities.players.statistics;
 
 import com.r6overwatch.overwatchapi.enums.MapResult;
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
-import com.r6overwatch.overwatchapi.models.entities.game.Map;
+import com.r6overwatch.overwatchapi.models.entities.games.Map;
 import lombok.*;
 
 import javax.persistence.*;

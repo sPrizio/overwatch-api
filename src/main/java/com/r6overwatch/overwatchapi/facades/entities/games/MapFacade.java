@@ -1,10 +1,10 @@
-package com.r6overwatch.overwatchapi.facades.entities.game;
+package com.r6overwatch.overwatchapi.facades.entities.games;
 
 import com.google.common.collect.Lists;
-import com.r6overwatch.overwatchapi.converters.entities.game.MapConverter;
+import com.r6overwatch.overwatchapi.converters.entities.games.MapConverter;
 import com.r6overwatch.overwatchapi.facades.entities.OverwatchFacade;
 import com.r6overwatch.overwatchapi.resources.entities.game.MapResource;
-import com.r6overwatch.overwatchapi.services.entities.game.MapService;
+import com.r6overwatch.overwatchapi.services.entities.games.MapService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -37,7 +37,7 @@ public class MapFacade implements OverwatchFacade<MapResource> {
      * @return {@link MapResource} who's name matches the given string
      */
     public MapResource findMapForName(String name) {
-        Optional<com.r6overwatch.overwatchapi.models.entities.game.Map> map = this.mapService.findMapForName(name);
+        Optional<com.r6overwatch.overwatchapi.models.entities.games.Map> map = this.mapService.findMapForName(name);
 
         if (map.isPresent()) {
             return this.mapConverter.convert(map.get());
@@ -49,7 +49,7 @@ public class MapFacade implements OverwatchFacade<MapResource> {
     @Override
     public MapResource find(Long id) {
 
-        Optional<com.r6overwatch.overwatchapi.models.entities.game.Map> map = this.mapService.find(id);
+        Optional<com.r6overwatch.overwatchapi.models.entities.games.Map> map = this.mapService.find(id);
 
         if (map.isPresent()) {
             return this.mapConverter.convert(map.get());
@@ -66,7 +66,7 @@ public class MapFacade implements OverwatchFacade<MapResource> {
     @Override
     public MapResource create(Map<String, Object> params) {
 
-        com.r6overwatch.overwatchapi.models.entities.game.Map map = this.mapService.create(params);
+        com.r6overwatch.overwatchapi.models.entities.games.Map map = this.mapService.create(params);
 
         if (map != null) {
             return this.mapConverter.convert(map);

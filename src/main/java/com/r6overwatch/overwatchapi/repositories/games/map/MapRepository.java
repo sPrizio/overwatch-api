@@ -1,6 +1,6 @@
-package com.r6overwatch.overwatchapi.repositories.game;
+package com.r6overwatch.overwatchapi.repositories.games.map;
 
-import com.r6overwatch.overwatchapi.models.entities.game.Map;
+import com.r6overwatch.overwatchapi.models.entities.games.Map;
 import com.r6overwatch.overwatchapi.repositories.OverwatchRepository;
 import org.springframework.data.repository.CrudRepository;
 

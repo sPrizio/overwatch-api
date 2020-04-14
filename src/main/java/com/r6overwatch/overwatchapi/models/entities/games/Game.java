@@ -1,13 +1,11 @@
-package com.r6overwatch.overwatchapi.models.entities.game;
+package com.r6overwatch.overwatchapi.models.entities.games;
 
 import com.r6overwatch.overwatchapi.enums.MapResult;
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
-import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerGameStatistics;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 /**
  * Class representation of a game between 2 teams

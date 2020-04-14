@@ -1,4 +1,4 @@
-package com.r6overwatch.overwatchapi.models.entities.game;
+package com.r6overwatch.overwatchapi.models.entities.games;
 
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
 import lombok.*;

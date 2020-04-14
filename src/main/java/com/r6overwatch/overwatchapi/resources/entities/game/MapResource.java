@@ -1,6 +1,6 @@
 package com.r6overwatch.overwatchapi.resources.entities.game;
 
-import com.r6overwatch.overwatchapi.models.entities.game.Map;
+import com.r6overwatch.overwatchapi.models.entities.games.Map;
 import com.r6overwatch.overwatchapi.resources.entities.OverwatchResource;
 import lombok.Getter;
 import lombok.Setter;
