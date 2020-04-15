@@ -32,11 +32,11 @@ public class GameResource implements OverwatchResource {
 
     @Getter
     @Setter
-    private SquadGameStatisticsResource blueTeamStatistics;
+    private SquadGameStatisticsResource blueSquadStatistics;
 
     @Getter
     @Setter
-    private SquadGameStatisticsResource orangeTeamStatistics;
+    private SquadGameStatisticsResource orangeSquadStatistics;
 
 
     //  METHODS
@@ -47,7 +47,7 @@ public class GameResource implements OverwatchResource {
                 this.code != null &&
                 this.map.isPresent() &&
                 this.gameDateTime != null &&
-                this.blueTeamStatistics.isPresent() &&
-                this.orangeTeamStatistics.isPresent();
+                this.blueSquadStatistics.isPresent() &&
+                this.orangeSquadStatistics.isPresent();
     }
 }

@@ -52,5 +52,6 @@ public class SquadGameStatistics implements OverwatchEntity {
     @Getter
     @Setter
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @NonNull
     private Set<PlayerGameStatistics> playerGameStatistics;
 }

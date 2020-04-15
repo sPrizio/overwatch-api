@@ -28,7 +28,7 @@ public class MapConverter implements OverwatchConverter<Map, MapResource> {
         MapResource resource = new MapResource();
 
         resource.setCode(entity.getId());
-        resource.setName(entity.getName);
+        resource.setName(entity.getName());
 
         return resource;
     }
