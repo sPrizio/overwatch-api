@@ -2,6 +2,7 @@ package com.r6overwatch.overwatchapi.models.entities.games;
 
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
+import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,13 +27,20 @@ public class Game implements OverwatchEntity {
     @Getter
     @Setter
     @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "season_id")
+    @NonNull
+    private Season season;
+
+    @Getter
+    @Setter
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_map_id")
     @NonNull
     private Map map;
 
     @Getter
     @Setter
-    @Column
+    @Column(unique = true)
     @NonNull
     private LocalDateTime gameDateTime;
 

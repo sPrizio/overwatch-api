@@ -1,6 +1,7 @@
 package com.r6overwatch.overwatchapi.repositories.games.game;
 
 import com.r6overwatch.overwatchapi.models.entities.games.Game;
+import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 
@@ -22,4 +23,13 @@ public interface GameRepositoryCustom {
      * @return list of {@link Game}s sorted by recency with regards to date time
      */
     List<Game> findGamesBySquadAndSeasonSortedByDate(Squad squad, Season season);
+
+    /**
+     * Finds games for the given {@link Player} and {@link Season}
+     *
+     * @param player {@link Player}'s games to obtain
+     * @param season {@link Season} desired season
+     * @return list of {@link Game}s sorted by recency with regards to date time
+     */
+    List<Game> findGamesByPlayerAndSeasonSortedByDateLimited(Player player, Season season, Integer limit);
 }

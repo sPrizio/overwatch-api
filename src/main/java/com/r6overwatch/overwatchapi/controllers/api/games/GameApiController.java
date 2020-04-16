@@ -4,6 +4,7 @@ import com.r6overwatch.overwatchapi.controllers.AbstractOverwatchController;
 import com.r6overwatch.overwatchapi.controllers.response.StandardJsonResponse;
 import com.r6overwatch.overwatchapi.facades.entities.games.GameFacade;
 import com.r6overwatch.overwatchapi.models.entities.games.Game;
+import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.resources.entities.games.GameResource;
@@ -86,7 +87,6 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
             final @RequestParam("seasonCode") @ApiParam("Code for the season to be obtained") String seasonCode
     ) {
 
-
         Long squadId = OverwatchUtils.parseLong(squadCode);
         Long seasonId = OverwatchUtils.parseLong(seasonCode);
 
@@ -103,5 +103,40 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
 
         LOGGER.error("No results were found for squadCode {}, seasonCode {}", squadCode, seasonCode);
         return new StandardJsonResponse(false, null, "No results were found for squadCode " + squadCode + ", seasonCode " + seasonCode);
+    }
+
+    /**
+     * Finds all {@link Game}s for the given {@link Player} code and for the specific {@link Season} code
+     *
+     * @param playerCode code of the desired {@link Player}
+     * @param seasonCode code of the desired {@link Season}
+     * @param limitCode limits the result set to the given size
+     * @return list of {@link Game}s sorted by their date in descending order
+     */
+    @GetMapping("/games/player")
+    @ApiOperation("Fetches games by player and for a specific season. Primary use case is for obtaining a player's most recent games")
+    public StandardJsonResponse getRecentGamesForPlayer(
+            final @RequestParam("playerCode") @ApiParam("Code for the desired player") String playerCode,
+            final @RequestParam("seasonCode") @ApiParam("Code for the season to be obtained") String seasonCode,
+            final @RequestParam("limitCode") @ApiParam("Numerical count for the results, i.e. how many results should be returned") String limitCode
+    ) {
+
+        Long playerId = OverwatchUtils.parseLong(playerCode);
+        Long seasonId = OverwatchUtils.parseLong(seasonCode);
+        Integer limit = OverwatchUtils.parseInteger(limitCode);
+
+        if (OverwatchUtils.areNonNull(playerId, seasonId, limit)) {
+            List<GameResource> games = this.gameFacade.findGamesByPlayerAndSeasonSortedByDateLimited(playerId, seasonId, limit);
+
+            if (CollectionUtils.isNotEmpty(games)) {
+                return new StandardJsonResponse(true, games, StringUtils.EMPTY);
+            }
+        }  else {
+            LOGGER.error("One or more of the required params was null or empty. playerCode {}, seasonCode {}, limitCode {}", playerCode, seasonCode, limitCode);
+            return new StandardJsonResponse(false, null, "One or more of the required params was null or empty. playerCode " + playerCode + ", seasonCode " + seasonCode + ", limitCode " + limitCode);
+        }
+
+        LOGGER.error("No results were found for playerCode {}, seasonCode {}, limitCode {}", playerCode, seasonCode, limit);
+        return new StandardJsonResponse(false, null, "No results were found for playerCode " + playerCode + ", seasonCode " + seasonCode + ", limitCode " + limitCode);
     }
 }

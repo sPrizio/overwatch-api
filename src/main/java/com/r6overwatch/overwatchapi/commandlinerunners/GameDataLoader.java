@@ -8,11 +8,13 @@ import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerGameStatistics;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
+import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.games.game.GameRepository;
 import com.r6overwatch.overwatchapi.repositories.games.map.MapRepository;
 import com.r6overwatch.overwatchapi.repositories.players.player.PlayerRepository;
 import com.r6overwatch.overwatchapi.repositories.players.squad.SquadRepository;
 import com.r6overwatch.overwatchapi.repositories.players.statistics.SquadGameStatisticsRepository;
+import com.r6overwatch.overwatchapi.repositories.season.SeasonRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -41,6 +43,9 @@ public class GameDataLoader implements CommandLineRunner {
 
     @Resource(name = "playerRepository")
     private PlayerRepository playerRepository;
+
+    @Resource(name = "seasonRepository")
+    private SeasonRepository seasonRepository;
 
     @Resource(name = "squadGameStatisticsRepository")
     private SquadGameStatisticsRepository squadGameStatisticsRepository;
@@ -287,59 +292,62 @@ public class GameDataLoader implements CommandLineRunner {
                 sgs41, sgs42, sgs43
         ));
 
-        Game game1 = new Game(mapMap.get("Chalet"), LocalDate.of(2020, 4, 3).atStartOfDay(), empty, sgs1);
-        Game game2 = new Game(mapMap.get("Kanal"), LocalDate.of(2020, 4, 3).atStartOfDay(), empty, sgs2);
-        Game game3 = new Game(mapMap.get("Theme Park"), LocalDate.of(2020, 4, 3).atStartOfDay(), empty, sgs3);
-        Game game4 = new Game(mapMap.get("Club House"), LocalDate.of(2020, 4, 3).atStartOfDay(), empty, sgs4);
-        Game game5 = new Game(mapMap.get("Theme Park"), LocalDate.of(2020, 4, 4).atStartOfDay(), sgs5, empty);
-        Game game6 = new Game(mapMap.get("Theme Park"), LocalDate.of(2020, 4, 4).atStartOfDay(), sgs6, empty);
-        Game game7 = new Game(mapMap.get("Kafe Dostoyevsky"), LocalDate.of(2020, 4, 4).atStartOfDay(), sgs7, empty);
-        Game game8 = new Game(mapMap.get("Bank"), LocalDate.of(2020, 4, 4).atStartOfDay(), sgs8, empty);
-        Game game9 = new Game(mapMap.get("Club House"), LocalDate.of(2020, 4, 1).atStartOfDay(), sgs9, empty);
-        Game game10 = new Game(mapMap.get("Border"), LocalDate.of(2020, 4, 5).atStartOfDay(), empty, sgs10);
+        Season season = this.seasonRepository.findBySeasonYearAndSeasonNumber(5, 1);
 
-        Game game11 = new Game(mapMap.get("Villa"), LocalDate.of(2020, 4, 5).atStartOfDay(), empty, sgs11);
-        Game game12 = new Game(mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atStartOfDay(), empty, sgs12);
-        Game game13 = new Game(mapMap.get("Border"), LocalDate.of(2020, 4, 7).atStartOfDay(), empty, sgs13);
-        Game game14 = new Game(mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atStartOfDay(), empty, sgs14);
-        Game game15 = new Game(mapMap.get("Club House"), LocalDate.of(2020, 4, 7).atStartOfDay(), empty, sgs15);
-        Game game16 = new Game(mapMap.get("Club House"), LocalDate.of(2020, 4, 7).atStartOfDay(), empty, sgs16);
-        Game game17 = new Game(mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atStartOfDay(), sgs17, empty);
-        Game game18 = new Game(mapMap.get("Theme Park"), LocalDate.of(2020, 4, 8).atStartOfDay(), empty, sgs18);
-        Game game19 = new Game(mapMap.get("Club House"), LocalDate.of(2020, 4, 8).atStartOfDay(), empty, sgs19);
-        Game game20 = new Game(mapMap.get("Coastline"), LocalDate.of(2020, 4, 8).atStartOfDay(), sgs20, empty);
+        Game game1 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 3).atTime(21, 0, 0), empty, sgs1);
+        Game game2 = new Game(season, mapMap.get("Kanal"), LocalDate.of(2020, 4, 3).atTime(21, 30, 0), empty, sgs2);
+        Game game3 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 3).atTime(22, 0, 0), empty, sgs3);
+        Game game4 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 3).atTime(22, 30, 0), empty, sgs4);
+        Game game5 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 4).atTime(21, 0, 0), sgs5, empty);
+        Game game6 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 4).atTime(21, 30, 0), sgs6, empty);
+        Game game7 = new Game(season, mapMap.get("Kafe Dostoyevsky"), LocalDate.of(2020, 4, 4).atTime(22, 0, 0), sgs7, empty);
+        Game game8 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 4).atTime(22, 30, 0), sgs8, empty);
+        Game game9 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 5).atTime(21, 0, 0), sgs9, empty);
+        Game game10 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 5).atTime(21, 30, 0), empty, sgs10);
 
-        Game game21 = new Game(mapMap.get("Outback"), LocalDate.of(2020, 4, 9).atStartOfDay(), empty, sgs21);
-        Game game22 = new Game(mapMap.get("Border"), LocalDate.of(2020, 4, 9).atStartOfDay(), sgs22, empty);
-        Game game23 = new Game(mapMap.get("Bank"), LocalDate.of(2020, 4, 9).atStartOfDay(), sgs23, empty);
-        Game game24 = new Game(mapMap.get("Chalet"), LocalDate.of(2020, 4, 9).atStartOfDay(), sgs24, empty);
-        Game game25 = new Game(mapMap.get("Theme Park"), LocalDate.of(2020, 4, 10).atStartOfDay(), empty, sgs25);
-        Game game26 = new Game(mapMap.get("Theme Park"), LocalDate.of(2020, 4, 10).atStartOfDay(), sgs26, empty);
-        Game game27 = new Game(mapMap.get("Outback"), LocalDate.of(2020, 4, 10).atStartOfDay(), sgs27, empty);
-        Game game28 = new Game(mapMap.get("Border"), LocalDate.of(2020, 4, 10).atStartOfDay(), empty, sgs28);
-        Game game29 = new Game(mapMap.get("Coastline"), LocalDate.of(2020, 4, 10).atStartOfDay(), empty, sgs29);
-        Game game30 = new Game(mapMap.get("Theme Park"), LocalDate.of(2020, 4, 11).atStartOfDay(), sgs30, empty);
+        Game game11 = new Game(season, mapMap.get("Villa"), LocalDate.of(2020, 4, 5).atTime(22, 0, 0), empty, sgs11);
+        Game game12 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atTime(21, 0, 0), empty, sgs12);
+        Game game13 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 7).atTime(21, 30, 0), empty, sgs13);
+        Game game14 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atTime(22, 0, 0), empty, sgs14);
+        Game game15 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 7).atTime(22, 30, 0), empty, sgs15);
+        Game game16 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 7).atTime(23, 0, 0), empty, sgs16);
+        Game game17 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atTime(23, 30, 0), sgs17, empty);
+        Game game18 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 8).atTime(21, 0, 0), empty, sgs18);
+        Game game19 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 8).atTime(21, 30, 0), empty, sgs19);
+        Game game20 = new Game(season, mapMap.get("Coastline"), LocalDate.of(2020, 4, 8).atTime(22, 0, 0), sgs20, empty);
 
-        Game game31 = new Game(mapMap.get("Villa"), LocalDate.of(2020, 4, 11).atStartOfDay(), empty, sgs31);
-        Game game32 = new Game(mapMap.get("Villa"), LocalDate.of(2020, 4, 11).atStartOfDay(), empty, sgs32);
-        Game game33 = new Game(mapMap.get("Border"), LocalDate.of(2020, 4, 11).atStartOfDay(), empty, sgs33);
-        Game game34 = new Game(mapMap.get("Bank"), LocalDate.of(2020, 4, 12).atStartOfDay(), empty, sgs34);
-        Game game35 = new Game(mapMap.get("Border"), LocalDate.of(2020, 4, 12).atStartOfDay(), empty, sgs35);
-        Game game36 = new Game(mapMap.get("Theme Park"), LocalDate.of(2020, 4, 13).atStartOfDay(), empty, sgs36);
-        Game game37 = new Game(mapMap.get("Border"), LocalDate.of(2020, 4, 13).atStartOfDay(), sgs37, empty);
-        Game game38 = new Game(mapMap.get("Outback"), LocalDate.of(2020, 4, 13).atStartOfDay(), sgs38, empty);
-        Game game39 = new Game(mapMap.get("Bank"), LocalDate.of(2020, 4, 13).atStartOfDay(), sgs39, empty);
-        Game game40 = new Game(mapMap.get("Theme Park"), LocalDate.of(2020, 4, 1).atStartOfDay(), sgs40, empty);
+        Game game21 = new Game(season, mapMap.get("Outback"), LocalDate.of(2020, 4, 9).atTime(21, 0, 0), empty, sgs21);
+        Game game22 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 9).atTime(21, 30, 0), sgs22, empty);
+        Game game23 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 9).atTime(22, 0, 0), sgs23, empty);
+        Game game24 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 9).atTime(22, 30, 0), sgs24, empty);
+        Game game25 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 10).atTime(21, 0, 0), empty, sgs25);
+        Game game26 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 10).atTime(21, 30, 0), sgs26, empty);
+        Game game27 = new Game(season, mapMap.get("Outback"), LocalDate.of(2020, 4, 10).atTime(22, 0, 0), sgs27, empty);
+        Game game28 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 10).atTime(22, 30, 0), empty, sgs28);
+        Game game29 = new Game(season, mapMap.get("Coastline"), LocalDate.of(2020, 4, 10).atTime(23, 0, 0), empty, sgs29);
+        Game game30 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 11).atTime(21, 0, 0), sgs30, empty);
 
-        Game game41 = new Game(mapMap.get("Kanal"), LocalDate.of(2020, 4, 14).atStartOfDay(), empty, sgs41);
-        Game game42 = new Game(mapMap.get("Club House"), LocalDate.of(2020, 4, 14).atStartOfDay(), sgs42, empty);
-        Game game43 = new Game(mapMap.get("Kafe Dostoyevsky"), LocalDate.of(2020, 4, 15).atStartOfDay(), empty, sgs43);
+        Game game31 = new Game(season, mapMap.get("Villa"), LocalDate.of(2020, 4, 11).atTime(21, 30, 0), empty, sgs31);
+        Game game32 = new Game(season, mapMap.get("Villa"), LocalDate.of(2020, 4, 11).atTime(22, 0, 0), empty, sgs32);
+        Game game33 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 11).atTime(22, 30, 0), empty, sgs33);
+        Game game34 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 12).atTime(21, 0, 0), empty, sgs34);
+        Game game35 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 12).atTime(21, 30, 0), empty, sgs35);
+        Game game36 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 13).atTime(21, 0, 0), empty, sgs36);
+        Game game37 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 13).atTime(21, 30, 0), sgs37, empty);
+        Game game38 = new Game(season, mapMap.get("Outback"), LocalDate.of(2020, 4, 13).atTime(22, 0, 0), sgs38, empty);
+        Game game39 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 13).atTime(22, 30, 0), sgs39, empty);
+        Game game40 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 14).atTime(0, 0, 0), sgs40, empty);
+
+        Game game41 = new Game(season, mapMap.get("Kanal"), LocalDate.of(2020, 4, 14).atTime(22, 30, 0), empty, sgs41);
+        Game game42 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 14).atTime(23, 0, 0), sgs42, empty);
+        Game game43 = new Game(season, mapMap.get("Kafe Dostoyevsky"), LocalDate.of(2020, 4, 15).atTime(0, 0, 0), empty, sgs43);
 
         this.gameRepository.saveAll(Arrays.asList(
                 game1, game2, game3, game4, game5, game6, game7, game8, game9, game10,
                 game11, game12, game13, game14, game15, game16, game17, game18, game19, game20,
                 game21, game22, game23, game24, game25, game26, game27, game28, game29, game30,
-                game31, game32, game33, game34, game35, game36, game37, game38, game39, game40
+                game31, game32, game33, game34, game35, game36, game37, game38, game39, game40,
+                game41, game42, game43
         ));
     }
 }

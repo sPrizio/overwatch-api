@@ -2,6 +2,7 @@ package com.r6overwatch.overwatchapi.services.entities.games;
 
 import com.google.common.collect.Lists;
 import com.r6overwatch.overwatchapi.models.entities.games.Game;
+import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.games.game.GameRepository;
@@ -48,6 +49,23 @@ public class GameService implements OverwatchEntityService<Game> {
         }
 
         return this.gameRepository.findGamesBySquadAndSeasonSortedByDate(squad, season);
+    }
+
+    /**
+     * Finds games for the given {@link Player} and {@link Season}
+     *
+     * @param player {@link Player}'s games to obtain
+     * @param season {@link Season} desired season
+     * @return list of {@link Game}s sorted by recency with regards to date time
+     */
+    public List<Game> findGamesByPlayerAndSeasonSortedByDateLimited(Player player, Season season, Integer limit) {
+
+        if (player == null || season == null || limit == null) {
+            LOGGER.error("One or more of the required parameters was null or empty: player {}, season {}, limit {}", player, season, limit);
+            return new ArrayList<>();
+        }
+
+        return this.gameRepository.findGamesByPlayerAndSeasonSortedByDateLimited(player, season, limit);
     }
 
     @Override
