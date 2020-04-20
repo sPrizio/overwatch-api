@@ -2,11 +2,13 @@ package com.r6overwatch.overwatchapi.controllers.api.players;
 
 import com.r6overwatch.overwatchapi.controllers.AbstractOverwatchController;
 import com.r6overwatch.overwatchapi.controllers.response.StandardJsonResponse;
+import com.r6overwatch.overwatchapi.enums.DateInterval;
 import com.r6overwatch.overwatchapi.enums.SortOrder;
 import com.r6overwatch.overwatchapi.facades.entities.players.PlayerFacade;
 import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
+import com.r6overwatch.overwatchapi.models.nonentities.StatsGraphWrapper;
 import com.r6overwatch.overwatchapi.resources.entities.players.PlayerResource;
 import com.r6overwatch.overwatchapi.services.nonentities.enums.EnumService;
 import com.r6overwatch.overwatchapi.utils.OverwatchUtils;
@@ -36,7 +38,10 @@ public class PlayerApiController extends AbstractOverwatchController<PlayerResou
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerApiController.class);
 
     @Resource(name = "enumService")
-    private EnumService<SortOrder> enumService;
+    private EnumService<SortOrder> sortOrderEnumService;
+
+    @Resource(name = "enumService")
+    private EnumService<DateInterval> dateIntervalEnumService;
 
     @Resource(name = "playerFacade")
     private PlayerFacade playerFacade;
@@ -101,7 +106,7 @@ public class PlayerApiController extends AbstractOverwatchController<PlayerResou
 
         Long squadId = OverwatchUtils.parseLong(squadCode);
         Long seasonId = OverwatchUtils.parseLong(seasonCode);
-        SortOrder sortOrder = this.enumService.getEnum(SortOrder.class, sortCode);
+        SortOrder sortOrder = this.sortOrderEnumService.getEnum(SortOrder.class, sortCode);
 
         if (OverwatchUtils.areNonNull(squadId, seasonId, sortOrder)) {
             List<PlayerResource> players = this.playerFacade.findPlayersBySquadAndSeasonSortedByAttribute(squadId, attribute, seasonId, sortOrder);
@@ -116,5 +121,36 @@ public class PlayerApiController extends AbstractOverwatchController<PlayerResou
 
         LOGGER.error("No results were found for squadCode {}, seasonCode {}, sortCode {}", squadCode, seasonCode, sortCode);
         return new StandardJsonResponse(false, null, "No results were found for squadCode " + squadCode + ", seasonCode " + seasonCode + ", sortCode " + sortCode);
+    }
+
+    @GetMapping("/graph")
+    @ApiOperation("Fetches a players stats per attribute for their games this season")
+    public StandardJsonResponse getPlayerStatsForGraph(
+            final @RequestParam("playerCode") @ApiParam("Code of the desired player") String playerCode,
+            final @RequestParam("attribute") @ApiParam("Attribute to look at, ex: kills") String attribute,
+            final @RequestParam("dateIntervalCode") @ApiParam("Date interval to consider. Accepted values: DAILY, WEEKLY OR MONTHLY") String dateIntervalCode
+    ) {
+
+        if (StringUtils.isEmpty(attribute)) {
+            LOGGER.error("No attribute specified");
+            return new StandardJsonResponse(false, null, "No attribute specified");
+        }
+
+        Long playerId = OverwatchUtils.parseLong(playerCode);
+        DateInterval dateInterval = this.dateIntervalEnumService.getEnum(DateInterval.class, dateIntervalCode);
+
+        if (OverwatchUtils.areNonNull(playerCode, dateInterval)) {
+            List<StatsGraphWrapper> results = this.playerFacade.findPlayerStatsForRecentGamesByStat(attribute, playerId, dateInterval);
+
+            if (CollectionUtils.isNotEmpty(results)) {
+                return new StandardJsonResponse(true, results, StringUtils.EMPTY);
+            }
+        } else {
+            LOGGER.error("One or more of the required params was null or empty. playerCode {}, attribute {}, dateIntervalCode {}", playerCode, attribute, dateIntervalCode);
+            return new StandardJsonResponse(false, null, "One or more of the required params was null or empty. playerCode " + playerCode + ", attribute " + attribute + ", dateIntervalCode " + dateIntervalCode);
+        }
+
+        LOGGER.error("No results were found for playerCode {}, attribute {}, dateIntervalCode {}", playerCode, attribute, dateIntervalCode);
+        return new StandardJsonResponse(false, null, "No results were found for playerCode " + playerCode + ", attribute " + attribute + ", dateIntervalCode " + dateIntervalCode);
     }
 }

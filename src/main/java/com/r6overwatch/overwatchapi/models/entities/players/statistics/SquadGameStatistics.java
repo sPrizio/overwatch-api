@@ -1,5 +1,6 @@
 package com.r6overwatch.overwatchapi.models.entities.players.statistics;
 
+import com.r6overwatch.overwatchapi.enums.GameSide;
 import com.r6overwatch.overwatchapi.enums.MapResult;
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
@@ -30,6 +31,12 @@ public class SquadGameStatistics implements OverwatchEntity {
     @JoinColumn(name = "squad_id")
     @NonNull
     private Squad squad;
+
+    @Getter
+    @Setter
+    @Column
+    @NonNull
+    private GameSide gameSide;
 
     @Getter
     @Setter

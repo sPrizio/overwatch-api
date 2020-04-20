@@ -19,7 +19,7 @@ public interface GameRepository extends OverwatchRepository, GameRepositoryCusto
      * Finds {@link Game}s by {@link Season}
      *
      * @param season {@link Season} to consider
-     * @return lsit of {@link Game}s order by their recency
+     * @return list of {@link Game}s order by their recency
      */
     List<Game> findBySeasonOrderByGameDateTimeDesc(Season season);
 }

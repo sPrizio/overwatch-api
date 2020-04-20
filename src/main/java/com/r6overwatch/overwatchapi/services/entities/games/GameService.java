@@ -4,18 +4,18 @@ import com.google.common.collect.Lists;
 import com.r6overwatch.overwatchapi.models.entities.games.Game;
 import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
+import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerGameStatistics;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.games.game.GameRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of the {@link OverwatchEntityService} architecture for {@link Game}
@@ -48,7 +48,14 @@ public class GameService implements OverwatchEntityService<Game> {
             return new ArrayList<>();
         }
 
-        return this.gameRepository.findGamesBySquadAndSeasonSortedByDate(squad, season);
+        List<Game> seasonGames = this.gameRepository.findBySeasonOrderByGameDateTimeDesc(season);
+
+        if (CollectionUtils.isNotEmpty(seasonGames)) {
+            List<Game> blue = seasonGames.stream().filter(game -> game.getSquadGameStatistics().getSquad().getId().equals(squad.getId())).collect(Collectors.toList());
+            return blue.stream().sorted(Comparator.comparing(Game::getGameDateTime).reversed()).collect(Collectors.toList());
+        }
+
+        return new ArrayList<>();
     }
 
     /**
@@ -56,16 +63,24 @@ public class GameService implements OverwatchEntityService<Game> {
      *
      * @param player {@link Player}'s games to obtain
      * @param season {@link Season} desired season
+     * @param limit the number of results to return, if null, no limit will be applied
      * @return list of {@link Game}s sorted by recency with regards to date time
      */
     public List<Game> findGamesByPlayerAndSeasonSortedByDateLimited(Player player, Season season, Integer limit) {
 
-        if (player == null || season == null || limit == null) {
-            LOGGER.error("One or more of the required parameters was null or empty: player {}, season {}, limit {}", player, season, limit);
+        if (player == null || season == null) {
+            LOGGER.error("One or more of the required parameters was null or empty: player {}, season {},", player, season);
             return new ArrayList<>();
         }
 
-        return this.gameRepository.findGamesByPlayerAndSeasonSortedByDateLimited(player, season, limit);
+        List<Game> seasonGames = this.gameRepository.findBySeasonOrderByGameDateTimeDesc(season);
+
+        if (CollectionUtils.isNotEmpty(seasonGames)) {
+            List<Game> blue = seasonGames.stream().filter(game -> containsPlayer(game.getSquadGameStatistics().getPlayerGameStatistics(), player)).collect(Collectors.toList());
+            return limit != null ? blue.stream().sorted(Comparator.comparing(Game::getGameDateTime).reversed()).limit(limit).collect(Collectors.toList()) : blue.stream().sorted(Comparator.comparing(Game::getGameDateTime).reversed()).collect(Collectors.toList());
+        }
+
+        return new ArrayList<>();
     }
 
     @Override
@@ -97,5 +112,19 @@ public class GameService implements OverwatchEntityService<Game> {
     public Game create(Map<String, Object> params) {
         //  TODO: implement this method once we're ready to include POST
         return null;
+    }
+
+
+    //  HELPERS
+
+    /**
+     * Checks if the given list ot {@link PlayerGameStatistics} contains the given {@link Player}
+     *
+     * @param playerGameStatistics list of {@link PlayerGameStatistics} to consider
+     * @param player desired {@link Player} to match
+     * @return true if the given {@link Player} appears in the list
+     */
+    private boolean containsPlayer(Set<PlayerGameStatistics> playerGameStatistics, Player player) {
+        return playerGameStatistics.stream().anyMatch(stats -> stats.getPlayer().getId().equals(player.getId()));
     }
 }

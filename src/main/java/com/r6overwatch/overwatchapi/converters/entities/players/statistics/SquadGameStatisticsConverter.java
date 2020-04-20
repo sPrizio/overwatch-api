@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -37,10 +38,11 @@ public class SquadGameStatisticsConverter implements OverwatchConverter<SquadGam
 
         resource.setCode(entity.getId());
         resource.setSquad(this.squadConverter.convert(entity.getSquad()));
+        resource.setGameSide(entity.getGameSide().toString().toLowerCase());
         resource.setMapResult(entity.getMapResult().toString().toLowerCase());
         resource.setRoundsWon(entity.getRoundsWon());
         resource.setRoundsLost(entity.getRoundsLost());
-        resource.setPlayerGameStatistics(Sets.newHashSet(this.playerGameStatisticsConverter.convertAll(entity.getPlayerGameStatistics())));
+        resource.setPlayerGameStatistics(new TreeSet<>(this.playerGameStatisticsConverter.convertAll(entity.getPlayerGameStatistics())));
 
         return resource;
     }

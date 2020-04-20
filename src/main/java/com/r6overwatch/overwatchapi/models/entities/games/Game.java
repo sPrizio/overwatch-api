@@ -47,15 +47,7 @@ public class Game implements OverwatchEntity {
     @Getter
     @Setter
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "blueSquadStatistics_id")
+    @JoinColumn(name = "squadStatistics_id")
     @NonNull
-    private SquadGameStatistics blueSquadStatistics;
-
-    @Getter
-    @Setter
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "orangeSquadStatistics_id")
-    @NonNull
-    private SquadGameStatistics orangeSquadStatistics;
-
+    private SquadGameStatistics squadGameStatistics;
 }

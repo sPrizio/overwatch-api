@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 /**
  * A DTO for {@link PlayerGameStatistics}
  *
@@ -14,7 +16,7 @@ import lombok.Setter;
  * @version 1.0
  */
 @NoArgsConstructor
-public class PlayerGameStatisticsResource implements OverwatchResource {
+public class PlayerGameStatisticsResource implements OverwatchResource, Comparable<PlayerGameStatisticsResource> {
 
     @Getter
     @Setter
@@ -52,5 +54,29 @@ public class PlayerGameStatisticsResource implements OverwatchResource {
                 this.kills != null &&
                 this.assists != null &&
                 this.deaths != null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        PlayerGameStatisticsResource resource = (PlayerGameStatisticsResource) o;
+        return this.code.equals(resource.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.code);
+    }
+
+    @Override
+    public int compareTo(PlayerGameStatisticsResource o) {
+        return o.score.compareTo(this.score);
     }
 }

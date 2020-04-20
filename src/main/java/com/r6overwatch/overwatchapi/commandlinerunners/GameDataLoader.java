@@ -1,6 +1,7 @@
 package com.r6overwatch.overwatchapi.commandlinerunners;
 
 import com.google.common.collect.Sets;
+import com.r6overwatch.overwatchapi.enums.GameSide;
 import com.r6overwatch.overwatchapi.enums.MapResult;
 import com.r6overwatch.overwatchapi.models.entities.games.Game;
 import com.r6overwatch.overwatchapi.models.entities.games.Map;
@@ -233,58 +234,55 @@ public class GameDataLoader implements CommandLineRunner {
         PlayerGameStatistics antPgs33 = new PlayerGameStatistics(ant, 3920, 1, 3, 2);
         PlayerGameStatistics antPgs34 = new PlayerGameStatistics(ant, 1395, 3, 0, 4);
 
-        SquadGameStatistics empty = new SquadGameStatistics();
+        SquadGameStatistics sgs1 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 4, 0, Sets.newHashSet(stephenPgs1, paoloPgs1, vincePgs1));
+        SquadGameStatistics sgs2 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 0, 4, Sets.newHashSet(stephenPgs2, paoloPgs2, vincePgs2));
+        SquadGameStatistics sgs3 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs3, paoloPgs3, vincePgs3));
+        SquadGameStatistics sgs4 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 4, 5, Sets.newHashSet(stephenPgs4, paoloPgs4, alexPgs4, vincePgs4));
+        SquadGameStatistics sgs5 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs5, paoloPgs5, vincePgs5));
+        SquadGameStatistics sgs6 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 4, 1, Sets.newHashSet(stephenPgs6, paoloPgs6, vincePgs6));
+        SquadGameStatistics sgs7 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs7, paoloPgs7, vincePgs7));
+        SquadGameStatistics sgs8 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs8, paoloPgs8, vincePgs8));
+        SquadGameStatistics sgs9 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 5, 4, Sets.newHashSet(stephenPgs9, paoloPgs9, vincePgs9));
+        SquadGameStatistics sgs10 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 4, 5, Sets.newHashSet(stephenPgs10, paoloPgs10, vincePgs10));
 
-        SquadGameStatistics sgs1 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 0, Sets.newHashSet(stephenPgs1, paoloPgs1, vincePgs1));
-        SquadGameStatistics sgs2 = new SquadGameStatistics(p2w, MapResult.LOSS, 0, 4, Sets.newHashSet(stephenPgs2, paoloPgs2, vincePgs2));
-        SquadGameStatistics sgs3 = new SquadGameStatistics(p2w, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs3, paoloPgs3, vincePgs3));
-        SquadGameStatistics sgs4 = new SquadGameStatistics(p2w, MapResult.LOSS, 4, 5, Sets.newHashSet(stephenPgs4, paoloPgs4, alexPgs4, vincePgs4));
-        SquadGameStatistics sgs5 = new SquadGameStatistics(p2w, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs5, paoloPgs5, vincePgs5));
-        SquadGameStatistics sgs6 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 1, Sets.newHashSet(stephenPgs6, paoloPgs6, vincePgs6));
-        SquadGameStatistics sgs7 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs7, paoloPgs7, vincePgs7));
-        SquadGameStatistics sgs8 = new SquadGameStatistics(p2w, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs8, paoloPgs8, vincePgs8));
-        SquadGameStatistics sgs9 = new SquadGameStatistics(p2w, MapResult.WIN, 5, 4, Sets.newHashSet(stephenPgs9, paoloPgs9, vincePgs9));
-        SquadGameStatistics sgs10 = new SquadGameStatistics(p2w, MapResult.LOSS, 4, 5, Sets.newHashSet(stephenPgs10, paoloPgs10, vincePgs10));
+        SquadGameStatistics sgs11 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs11, paoloPgs11, vincePgs11));
+        SquadGameStatistics sgs12 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs12, vincePgs12));
+        SquadGameStatistics sgs13 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs13, vincePgs13));
+        SquadGameStatistics sgs14 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 4, 0, Sets.newHashSet(stephenPgs14, paoloPgs14, vincePgs14));
+        SquadGameStatistics sgs15 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 4, 1, Sets.newHashSet(stephenPgs15, paoloPgs15, vincePgs15));
+        SquadGameStatistics sgs16 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 4, 0, Sets.newHashSet(stephenPgs16, paoloPgs16, vincePgs16));
+        SquadGameStatistics sgs17 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs17, paoloPgs17, alexPgs17, vincePgs17, antPgs17));
+        SquadGameStatistics sgs18 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs18, paoloPgs18, alexPgs18, vincePgs18, antPgs18));
+        SquadGameStatistics sgs19 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs19, paoloPgs19, alexPgs19, vincePgs19, antPgs19));
+        SquadGameStatistics sgs20 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 5, 4, Sets.newHashSet(stephenPgs20, paoloPgs20, alexPgs20, vincePgs20, antPgs20));
 
-        SquadGameStatistics sgs11 = new SquadGameStatistics(p2w, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs11, paoloPgs11, vincePgs11));
-        SquadGameStatistics sgs12 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs12, vincePgs12));
-        SquadGameStatistics sgs13 = new SquadGameStatistics(p2w, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs13, vincePgs13));
-        SquadGameStatistics sgs14 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 0, Sets.newHashSet(stephenPgs14, paoloPgs14, vincePgs14));
-        SquadGameStatistics sgs15 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 1, Sets.newHashSet(stephenPgs15, paoloPgs15, vincePgs15));
-        SquadGameStatistics sgs16 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 0, Sets.newHashSet(stephenPgs16, paoloPgs16, vincePgs16));
-        SquadGameStatistics sgs17 = new SquadGameStatistics(p2w, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs17, paoloPgs17, alexPgs17, vincePgs17, antPgs17));
-        SquadGameStatistics sgs18 = new SquadGameStatistics(p2w, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs18, paoloPgs18, alexPgs18, vincePgs18, antPgs18));
-        SquadGameStatistics sgs19 = new SquadGameStatistics(p2w, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs19, paoloPgs19, alexPgs19, vincePgs19, antPgs19));
-        SquadGameStatistics sgs20 = new SquadGameStatistics(p2w, MapResult.WIN, 5, 4, Sets.newHashSet(stephenPgs20, paoloPgs20, alexPgs20, vincePgs20, antPgs20));
+        SquadGameStatistics sgs21 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs21, paoloPgs21));
+        SquadGameStatistics sgs22 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs22, vincePgs22));
+        SquadGameStatistics sgs23 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs23, paoloPgs23, vincePgs23));
+        SquadGameStatistics sgs24 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs24, paoloPgs24, vincePgs24));
+        SquadGameStatistics sgs25 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs25, alexPgs25, vincePgs25, antPgs25));
+        SquadGameStatistics sgs26 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs26, paoloPgs26, alexPgs26, vincePgs26, antPgs26));
+        SquadGameStatistics sgs27 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs27, paoloPgs27, alexPgs27, vincePgs27, antPgs27));
+        SquadGameStatistics sgs28 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs28, paoloPgs28, alexPgs28, vincePgs28, antPgs28));
+        SquadGameStatistics sgs29 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs29, paoloPgs29, alexPgs29, vincePgs29, antPgs29));
+        SquadGameStatistics sgs30 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs30, paoloPgs30, alexPgs30, vincePgs30, antPgs30));
 
-        SquadGameStatistics sgs21 = new SquadGameStatistics(p2w, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs21, paoloPgs21));
-        SquadGameStatistics sgs22 = new SquadGameStatistics(p2w, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs22, vincePgs22));
-        SquadGameStatistics sgs23 = new SquadGameStatistics(p2w, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs23, paoloPgs23, vincePgs23));
-        SquadGameStatistics sgs24 = new SquadGameStatistics(p2w, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs24, paoloPgs24, vincePgs24));
-        SquadGameStatistics sgs25 = new SquadGameStatistics(p2w, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs25, alexPgs25, vincePgs25, antPgs25));
-        SquadGameStatistics sgs26 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs26, paoloPgs26, alexPgs26, vincePgs26, antPgs26));
-        SquadGameStatistics sgs27 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs27, paoloPgs27, alexPgs27, vincePgs27, antPgs27));
-        SquadGameStatistics sgs28 = new SquadGameStatistics(p2w, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs28, paoloPgs28, alexPgs28, vincePgs28, antPgs28));
-        SquadGameStatistics sgs29 = new SquadGameStatistics(p2w, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs29, paoloPgs29, alexPgs29, vincePgs29, antPgs29));
-        SquadGameStatistics sgs30 = new SquadGameStatistics(p2w, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs30, paoloPgs30, alexPgs30, vincePgs30, antPgs30));
+        SquadGameStatistics sgs31 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs31, paoloPgs31, alexPgs31, antPgs31));
+        SquadGameStatistics sgs32 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs32, paoloPgs32, alexPgs32, vincePgs32, antPgs32));
+        SquadGameStatistics sgs33 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs33, paoloPgs33, alexPgs33, vincePgs33, antPgs33));
+        SquadGameStatistics sgs34 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.WIN, 4, 0, Sets.newHashSet(stephenPgs34, paoloPgs34, alexPgs34, vincePgs34, antPgs34));
+        SquadGameStatistics sgs35 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 0, 4, Sets.newHashSet(stephenPgs35, paoloPgs35, vincePgs35));
+        SquadGameStatistics sgs36 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs36));
+        SquadGameStatistics sgs37 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs37));
+        SquadGameStatistics sgs38 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs38, paoloPgs38));
+        SquadGameStatistics sgs39 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs39, paoloPgs39));
+        SquadGameStatistics sgs40 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.WIN, 4, 1, Sets.newHashSet(stephenPgs40, paoloPgs40));
 
-        SquadGameStatistics sgs31 = new SquadGameStatistics(p2w, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs31, paoloPgs31, alexPgs31, antPgs31));
-        SquadGameStatistics sgs32 = new SquadGameStatistics(p2w, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs32, paoloPgs32, alexPgs32, vincePgs32, antPgs32));
-        SquadGameStatistics sgs33 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 2, Sets.newHashSet(stephenPgs33, paoloPgs33, alexPgs33, vincePgs33, antPgs33));
-        SquadGameStatistics sgs34 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 0, Sets.newHashSet(stephenPgs34, paoloPgs34, alexPgs34, vincePgs34, antPgs34));
-        SquadGameStatistics sgs35 = new SquadGameStatistics(p2w, MapResult.LOSS, 0, 4, Sets.newHashSet(stephenPgs35, paoloPgs35, vincePgs35));
-        SquadGameStatistics sgs36 = new SquadGameStatistics(p2w, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs36));
-        SquadGameStatistics sgs37 = new SquadGameStatistics(p2w, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs37));
-        SquadGameStatistics sgs38 = new SquadGameStatistics(p2w, MapResult.WIN, 5, 3, Sets.newHashSet(stephenPgs38, paoloPgs38));
-        SquadGameStatistics sgs39 = new SquadGameStatistics(p2w, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs39, paoloPgs39));
-        SquadGameStatistics sgs40 = new SquadGameStatistics(p2w, MapResult.WIN, 4, 1, Sets.newHashSet(stephenPgs40, paoloPgs40));
-
-        SquadGameStatistics sgs41 = new SquadGameStatistics(p2w, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs41, paoloPgs41));
-        SquadGameStatistics sgs42 = new SquadGameStatistics(p2w, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs42, paoloPgs42));
-        SquadGameStatistics sgs43 = new SquadGameStatistics(p2w, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs43, paoloPgs43));
+        SquadGameStatistics sgs41 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 1, 4, Sets.newHashSet(stephenPgs41, paoloPgs41));
+        SquadGameStatistics sgs42 = new SquadGameStatistics(p2w, GameSide.BLUE, MapResult.LOSS, 2, 4, Sets.newHashSet(stephenPgs42, paoloPgs42));
+        SquadGameStatistics sgs43 = new SquadGameStatistics(p2w, GameSide.ORANGE, MapResult.LOSS, 3, 5, Sets.newHashSet(stephenPgs43, paoloPgs43));
 
         this.squadGameStatisticsRepository.saveAll(Arrays.asList(
-                empty,
                 sgs1, sgs2, sgs3, sgs4, sgs5, sgs6, sgs7, sgs8, sgs9, sgs10,
                 sgs11, sgs12, sgs13, sgs14, sgs15, sgs16, sgs17, sgs18, sgs19, sgs20,
                 sgs21, sgs22, sgs23, sgs24, sgs25, sgs26, sgs27, sgs28, sgs29, sgs30,
@@ -294,53 +292,53 @@ public class GameDataLoader implements CommandLineRunner {
 
         Season season = this.seasonRepository.findBySeasonYearAndSeasonNumber(5, 1);
 
-        Game game1 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 3).atTime(21, 0, 0), empty, sgs1);
-        Game game2 = new Game(season, mapMap.get("Kanal"), LocalDate.of(2020, 4, 3).atTime(21, 30, 0), empty, sgs2);
-        Game game3 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 3).atTime(22, 0, 0), empty, sgs3);
-        Game game4 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 3).atTime(22, 30, 0), empty, sgs4);
-        Game game5 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 4).atTime(21, 0, 0), sgs5, empty);
-        Game game6 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 4).atTime(21, 30, 0), sgs6, empty);
-        Game game7 = new Game(season, mapMap.get("Kafe Dostoyevsky"), LocalDate.of(2020, 4, 4).atTime(22, 0, 0), sgs7, empty);
-        Game game8 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 4).atTime(22, 30, 0), sgs8, empty);
-        Game game9 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 5).atTime(21, 0, 0), sgs9, empty);
-        Game game10 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 5).atTime(21, 30, 0), empty, sgs10);
+        Game game1 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 3).atTime(21, 0, 0), sgs1);
+        Game game2 = new Game(season, mapMap.get("Kanal"), LocalDate.of(2020, 4, 3).atTime(21, 30, 0), sgs2);
+        Game game3 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 3).atTime(22, 0, 0), sgs3);
+        Game game4 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 3).atTime(22, 30, 0), sgs4);
+        Game game5 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 4).atTime(21, 0, 0), sgs5);
+        Game game6 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 4).atTime(21, 30, 0), sgs6);
+        Game game7 = new Game(season, mapMap.get("Kafe Dostoyevsky"), LocalDate.of(2020, 4, 4).atTime(22, 0, 0), sgs7);
+        Game game8 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 4).atTime(22, 30, 0), sgs8);
+        Game game9 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 5).atTime(21, 0, 0), sgs9);
+        Game game10 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 5).atTime(21, 30, 0), sgs10);
 
-        Game game11 = new Game(season, mapMap.get("Villa"), LocalDate.of(2020, 4, 5).atTime(22, 0, 0), empty, sgs11);
-        Game game12 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atTime(21, 0, 0), empty, sgs12);
-        Game game13 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 7).atTime(21, 30, 0), empty, sgs13);
-        Game game14 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atTime(22, 0, 0), empty, sgs14);
-        Game game15 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 7).atTime(22, 30, 0), empty, sgs15);
-        Game game16 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 7).atTime(23, 0, 0), empty, sgs16);
-        Game game17 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atTime(23, 30, 0), sgs17, empty);
-        Game game18 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 8).atTime(21, 0, 0), empty, sgs18);
-        Game game19 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 8).atTime(21, 30, 0), empty, sgs19);
-        Game game20 = new Game(season, mapMap.get("Coastline"), LocalDate.of(2020, 4, 8).atTime(22, 0, 0), sgs20, empty);
+        Game game11 = new Game(season, mapMap.get("Villa"), LocalDate.of(2020, 4, 5).atTime(22, 0, 0), sgs11);
+        Game game12 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atTime(21, 0, 0), sgs12);
+        Game game13 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 7).atTime(21, 30, 0), sgs13);
+        Game game14 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atTime(22, 0, 0), sgs14);
+        Game game15 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 7).atTime(22, 30, 0), sgs15);
+        Game game16 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 7).atTime(23, 0, 0), sgs16);
+        Game game17 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 7).atTime(23, 30, 0), sgs17);
+        Game game18 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 8).atTime(21, 0, 0), sgs18);
+        Game game19 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 8).atTime(21, 30, 0), sgs19);
+        Game game20 = new Game(season, mapMap.get("Coastline"), LocalDate.of(2020, 4, 8).atTime(22, 0, 0), sgs20);
 
-        Game game21 = new Game(season, mapMap.get("Outback"), LocalDate.of(2020, 4, 9).atTime(21, 0, 0), empty, sgs21);
-        Game game22 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 9).atTime(21, 30, 0), sgs22, empty);
-        Game game23 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 9).atTime(22, 0, 0), sgs23, empty);
-        Game game24 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 9).atTime(22, 30, 0), sgs24, empty);
-        Game game25 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 10).atTime(21, 0, 0), empty, sgs25);
-        Game game26 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 10).atTime(21, 30, 0), sgs26, empty);
-        Game game27 = new Game(season, mapMap.get("Outback"), LocalDate.of(2020, 4, 10).atTime(22, 0, 0), sgs27, empty);
-        Game game28 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 10).atTime(22, 30, 0), empty, sgs28);
-        Game game29 = new Game(season, mapMap.get("Coastline"), LocalDate.of(2020, 4, 10).atTime(23, 0, 0), empty, sgs29);
-        Game game30 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 11).atTime(21, 0, 0), sgs30, empty);
+        Game game21 = new Game(season, mapMap.get("Outback"), LocalDate.of(2020, 4, 9).atTime(21, 0, 0), sgs21);
+        Game game22 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 9).atTime(21, 30, 0), sgs22);
+        Game game23 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 9).atTime(22, 0, 0), sgs23);
+        Game game24 = new Game(season, mapMap.get("Chalet"), LocalDate.of(2020, 4, 9).atTime(22, 30, 0), sgs24);
+        Game game25 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 10).atTime(21, 0, 0), sgs25);
+        Game game26 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 10).atTime(21, 30, 0), sgs26);
+        Game game27 = new Game(season, mapMap.get("Outback"), LocalDate.of(2020, 4, 10).atTime(22, 0, 0), sgs27);
+        Game game28 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 10).atTime(22, 30, 0), sgs28);
+        Game game29 = new Game(season, mapMap.get("Coastline"), LocalDate.of(2020, 4, 10).atTime(23, 0, 0), sgs29);
+        Game game30 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 11).atTime(21, 0, 0), sgs30);
 
-        Game game31 = new Game(season, mapMap.get("Villa"), LocalDate.of(2020, 4, 11).atTime(21, 30, 0), empty, sgs31);
-        Game game32 = new Game(season, mapMap.get("Villa"), LocalDate.of(2020, 4, 11).atTime(22, 0, 0), empty, sgs32);
-        Game game33 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 11).atTime(22, 30, 0), empty, sgs33);
-        Game game34 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 12).atTime(21, 0, 0), empty, sgs34);
-        Game game35 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 12).atTime(21, 30, 0), empty, sgs35);
-        Game game36 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 13).atTime(21, 0, 0), empty, sgs36);
-        Game game37 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 13).atTime(21, 30, 0), sgs37, empty);
-        Game game38 = new Game(season, mapMap.get("Outback"), LocalDate.of(2020, 4, 13).atTime(22, 0, 0), sgs38, empty);
-        Game game39 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 13).atTime(22, 30, 0), sgs39, empty);
-        Game game40 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 14).atTime(0, 0, 0), sgs40, empty);
+        Game game31 = new Game(season, mapMap.get("Villa"), LocalDate.of(2020, 4, 11).atTime(21, 30, 0), sgs31);
+        Game game32 = new Game(season, mapMap.get("Villa"), LocalDate.of(2020, 4, 11).atTime(22, 0, 0), sgs32);
+        Game game33 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 11).atTime(22, 30, 0), sgs33);
+        Game game34 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 12).atTime(21, 0, 0), sgs34);
+        Game game35 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 12).atTime(21, 30, 0), sgs35);
+        Game game36 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 13).atTime(21, 0, 0), sgs36);
+        Game game37 = new Game(season, mapMap.get("Border"), LocalDate.of(2020, 4, 13).atTime(21, 30, 0), sgs37);
+        Game game38 = new Game(season, mapMap.get("Outback"), LocalDate.of(2020, 4, 13).atTime(22, 0, 0), sgs38);
+        Game game39 = new Game(season, mapMap.get("Bank"), LocalDate.of(2020, 4, 13).atTime(22, 30, 0), sgs39);
+        Game game40 = new Game(season, mapMap.get("Theme Park"), LocalDate.of(2020, 4, 14).atTime(0, 0, 0), sgs40);
 
-        Game game41 = new Game(season, mapMap.get("Kanal"), LocalDate.of(2020, 4, 14).atTime(22, 30, 0), empty, sgs41);
-        Game game42 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 14).atTime(23, 0, 0), sgs42, empty);
-        Game game43 = new Game(season, mapMap.get("Kafe Dostoyevsky"), LocalDate.of(2020, 4, 15).atTime(0, 0, 0), empty, sgs43);
+        Game game41 = new Game(season, mapMap.get("Kanal"), LocalDate.of(2020, 4, 14).atTime(22, 30, 0), sgs41);
+        Game game42 = new Game(season, mapMap.get("Club House"), LocalDate.of(2020, 4, 14).atTime(23, 0, 0), sgs42);
+        Game game43 = new Game(season, mapMap.get("Kafe Dostoyevsky"), LocalDate.of(2020, 4, 15).atTime(0, 0, 0), sgs43);
 
         this.gameRepository.saveAll(Arrays.asList(
                 game1, game2, game3, game4, game5, game6, game7, game8, game9, game10,

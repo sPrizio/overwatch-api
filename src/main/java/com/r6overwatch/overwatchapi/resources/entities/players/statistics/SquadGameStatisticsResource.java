@@ -1,5 +1,6 @@
 package com.r6overwatch.overwatchapi.resources.entities.players.statistics;
 
+import com.r6overwatch.overwatchapi.enums.GameSide;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
 import com.r6overwatch.overwatchapi.resources.entities.OverwatchResource;
 import com.r6overwatch.overwatchapi.resources.entities.players.SquadResource;
@@ -30,6 +31,10 @@ public class SquadGameStatisticsResource implements OverwatchResource {
 
     @Getter
     @Setter
+    private String gameSide;
+
+    @Getter
+    @Setter
     private String mapResult;
 
     @Getter
@@ -52,6 +57,7 @@ public class SquadGameStatisticsResource implements OverwatchResource {
         return
                 this.code != null &&
                 this.squad.isPresent() &&
+                StringUtils.isNotEmpty(this.gameSide) &&
                 StringUtils.isNotEmpty(this.mapResult) &&
                 this.roundsWon != null &&
                 this.roundsLost != null &&

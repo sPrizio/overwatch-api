@@ -38,8 +38,7 @@ public class GameConverter implements OverwatchConverter<Game, GameResource> {
         resource.setCode(entity.getId());
         resource.setMap(this.mapConverter.convert(entity.getMap()));
         resource.setGameDateTime(entity.getGameDateTime());
-        resource.setBlueSquadStatistics(this.squadGameStatisticsConverter.convert(entity.getBlueSquadStatistics()));
-        resource.setOrangeSquadStatistics(this.squadGameStatisticsConverter.convert(entity.getOrangeSquadStatistics()));
+        resource.setSquadGameStatistics(this.squadGameStatisticsConverter.convert(entity.getSquadGameStatistics()));
 
         return resource;
     }
