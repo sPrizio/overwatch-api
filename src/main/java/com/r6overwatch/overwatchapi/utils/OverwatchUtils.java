@@ -42,7 +42,7 @@ public class OverwatchUtils {
     }
 
     /**
-     * Attempts to parse a string into an {@link Long}
+     * Attempts to parse a string into a {@link Long}
      *
      * @param string long string to be parsed
      * @return will return null if the string cannot be parsed

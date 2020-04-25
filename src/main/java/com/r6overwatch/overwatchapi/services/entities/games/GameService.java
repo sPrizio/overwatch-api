@@ -8,6 +8,7 @@ import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerGam
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.games.game.GameRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
+import com.r6overwatch.overwatchapi.translators.games.GameTranslator;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,9 @@ public class GameService implements OverwatchEntityService<Game> {
 
     @Resource(name = "gameRepository")
     private GameRepository gameRepository;
+
+    @Resource(name = "gameTranslator")
+    private GameTranslator gameTranslator;
 
 
     //  METHODS
@@ -110,7 +114,13 @@ public class GameService implements OverwatchEntityService<Game> {
 
     @Override
     public Game create(Map<String, Object> params) {
-        //  TODO: implement this method once we're ready to include POST
+
+        Game game = this.gameTranslator.translate(params);
+
+        if (game != null) {
+            //return this.gameRepository.save(game);
+        }
+
         return null;
     }
 

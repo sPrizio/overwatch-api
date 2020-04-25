@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.repositories.players.squad.SquadRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
+import com.r6overwatch.overwatchapi.translators.players.SquadTranslator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class SquadService implements OverwatchEntityService<Squad> {
 
     @Resource(name = "squadRepository")
     private SquadRepository squadRepository;
+
+    @Resource(name = "squadTranslator")
+    private SquadTranslator squadTranslator;
 
 
     //  METHODS
@@ -57,7 +61,13 @@ public class SquadService implements OverwatchEntityService<Squad> {
 
     @Override
     public Squad create(Map<String, Object> params) {
-        //  TODO: implement this method once we're ready to include POST
+
+        Squad squad = this.squadTranslator.translate(params);
+
+        if (squad != null) {
+            return this.squadRepository.save(squad);
+        }
+
         return null;
     }
 }

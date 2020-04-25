@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.r6overwatch.overwatchapi.models.entities.games.Map;
 import com.r6overwatch.overwatchapi.repositories.games.map.MapRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
+import com.r6overwatch.overwatchapi.translators.games.MapTranslator;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,9 @@ public class MapService implements OverwatchEntityService<Map> {
 
     @Resource(name = "mapRepository")
     private MapRepository mapRepository;
+
+    @Resource(name = "mapTranslator")
+    private MapTranslator mapTranslator;
 
 
     //  METHODS
@@ -73,7 +77,13 @@ public class MapService implements OverwatchEntityService<Map> {
 
     @Override
     public Map create(java.util.Map<String, Object> params) {
-        //  TODO: implement this method once we're ready to include POST
+
+        Map map = this.mapTranslator.translate(params);
+
+        if (map != null) {
+            return this.mapRepository.save(map);
+        }
+
         return null;
     }
 }

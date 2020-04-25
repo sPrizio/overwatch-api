@@ -14,6 +14,7 @@ import com.r6overwatch.overwatchapi.repositories.players.player.PlayerRepository
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
 import com.r6overwatch.overwatchapi.services.entities.games.GameService;
 import com.r6overwatch.overwatchapi.services.entities.season.SeasonService;
+import com.r6overwatch.overwatchapi.translators.players.PlayerTranslator;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -45,6 +46,9 @@ public class PlayerService implements OverwatchEntityService<Player> {
 
     @Resource(name = "playerRepository")
     private PlayerRepository playerRepository;
+
+    @Resource(name = "playerTranslator")
+    private PlayerTranslator playerTranslator;
 
     @Resource(name = "seasonService")
     private SeasonService seasonService;
@@ -126,7 +130,13 @@ public class PlayerService implements OverwatchEntityService<Player> {
 
     @Override
     public Player create(Map<String, Object> params) {
-        //  TODO: implement this method once we're ready to include POST
+
+        Player player = this.playerTranslator.translate(params);
+
+        if (player != null) {
+            return this.playerRepository.save(player);
+        }
+
         return null;
     }
 
