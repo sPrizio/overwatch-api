@@ -1,4 +1,4 @@
-package com.r6overwatch.overwatchapi.models.entities.game;
+package com.r6overwatch.overwatchapi.models.entities.games;
 
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
 import lombok.*;
@@ -24,6 +24,6 @@ public class Map implements OverwatchEntity {
     @Getter
     @Setter
     @NonNull
-    @Column
+    @Column(unique = true)
     private String name;
 }

@@ -1,6 +1,8 @@
 package com.r6overwatch.overwatchapi.controllers.response;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * A standard response in JSON that is returned by the API endpoints

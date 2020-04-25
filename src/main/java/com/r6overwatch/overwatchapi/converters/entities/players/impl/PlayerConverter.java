@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Convert for {@link Player} entities into {@link PlayerResource} objects
+ * Converter for {@link Player} entities into {@link PlayerResource} objects
  *
  * @author Stephen Prizio <a href="http://www.saprizio.com">www.saprizio.com</a>
  * @version 1.0

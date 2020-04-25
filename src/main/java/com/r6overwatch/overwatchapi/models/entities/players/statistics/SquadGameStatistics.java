@@ -1,8 +1,9 @@
 package com.r6overwatch.overwatchapi.models.entities.players.statistics;
 
+import com.r6overwatch.overwatchapi.enums.GameSide;
 import com.r6overwatch.overwatchapi.enums.MapResult;
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
-import com.r6overwatch.overwatchapi.models.entities.game.Map;
+import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,9 +28,15 @@ public class SquadGameStatistics implements OverwatchEntity {
     @Getter
     @Setter
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "map_id")
+    @JoinColumn(name = "squad_id")
     @NonNull
-    private Map map;
+    private Squad squad;
+
+    @Getter
+    @Setter
+    @Column
+    @NonNull
+    private GameSide gameSide;
 
     @Getter
     @Setter
@@ -52,5 +59,6 @@ public class SquadGameStatistics implements OverwatchEntity {
     @Getter
     @Setter
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @NonNull
     private Set<PlayerGameStatistics> playerGameStatistics;
 }

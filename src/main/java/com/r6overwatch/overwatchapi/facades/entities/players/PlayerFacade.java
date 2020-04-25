@@ -2,11 +2,13 @@ package com.r6overwatch.overwatchapi.facades.entities.players;
 
 import com.google.common.collect.Lists;
 import com.r6overwatch.overwatchapi.converters.entities.players.impl.PlayerConverter;
+import com.r6overwatch.overwatchapi.enums.DateInterval;
 import com.r6overwatch.overwatchapi.enums.SortOrder;
 import com.r6overwatch.overwatchapi.facades.entities.OverwatchFacade;
 import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
+import com.r6overwatch.overwatchapi.models.nonentities.StatsGraphWrapper;
 import com.r6overwatch.overwatchapi.resources.entities.players.PlayerResource;
 import com.r6overwatch.overwatchapi.services.entities.players.PlayerService;
 import com.r6overwatch.overwatchapi.services.entities.players.SquadService;
@@ -43,6 +45,27 @@ public class PlayerFacade implements OverwatchFacade<PlayerResource> {
 
 
     //  METHODS
+
+    /**
+     * Returns a list of {@link StatsGraphWrapper} objects for graphing of a player's recent performance for the given attribute
+     *
+     * @param stat stat to consider, ex: kills
+     * @param playerId id of {@link Player} who's stats to obtain
+     * @param dateInterval {@link DateInterval} timeline to consider
+     * @return list of {@link StatsGraphWrapper}
+     */
+    public List<StatsGraphWrapper> findPlayerStatsForRecentGamesByStat(String stat, Long playerId, DateInterval dateInterval) {
+
+        if (OverwatchUtils.areNonNull(playerId, dateInterval)) {
+            Optional<Player> player = this.playerService.find(playerId);
+
+            if (player.isPresent()) {
+                return this.playerService.findPlayerStatsForRecentGamesByStat(stat, player.get(), dateInterval);
+            }
+        }
+
+        return new ArrayList<>();
+    }
 
     /**
      * Obtains all {@link Player}s by {@link Squad} and {@link Season}, sorted by a specific attribute

@@ -1,13 +1,12 @@
-package com.r6overwatch.overwatchapi.models.entities.game;
+package com.r6overwatch.overwatchapi.models.entities.games;
 
-import com.r6overwatch.overwatchapi.enums.MapResult;
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
-import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerGameStatistics;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
+import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 /**
  * Class representation of a game between 2 teams
@@ -28,28 +27,27 @@ public class Game implements OverwatchEntity {
     @Getter
     @Setter
     @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "season_id")
+    @NonNull
+    private Season season;
+
+    @Getter
+    @Setter
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_map_id")
     @NonNull
     private Map map;
 
     @Getter
     @Setter
-    @Column
+    @Column(unique = true)
     @NonNull
-    private MapResult result;
+    private LocalDateTime gameDateTime;
 
     @Getter
     @Setter
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "blueTeamStatistics_id")
+    @JoinColumn(name = "squadStatistics_id")
     @NonNull
-    private SquadGameStatistics blueTeamStatistics;
-
-    @Getter
-    @Setter
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "orangeTeamStatistics_id")
-    @NonNull
-    private SquadGameStatistics orangeTeamStatistics;
-
+    private SquadGameStatistics squadGameStatistics;
 }

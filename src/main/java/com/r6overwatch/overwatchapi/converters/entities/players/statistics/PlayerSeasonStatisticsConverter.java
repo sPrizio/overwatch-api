@@ -1,7 +1,6 @@
 package com.r6overwatch.overwatchapi.converters.entities.players.statistics;
 
 import com.r6overwatch.overwatchapi.converters.entities.OverwatchConverter;
-import com.r6overwatch.overwatchapi.converters.entities.players.impl.PlayerConverter;
 import com.r6overwatch.overwatchapi.converters.entities.season.SeasonConverter;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerSeasonStatistics;
 import com.r6overwatch.overwatchapi.resources.entities.players.statistics.PlayerSeasonStatisticsResource;
