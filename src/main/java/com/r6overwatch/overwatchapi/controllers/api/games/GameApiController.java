@@ -9,6 +9,8 @@ import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.resources.entities.games.GameResource;
 import com.r6overwatch.overwatchapi.utils.OverwatchUtils;
+import com.r6overwatch.overwatchapi.validation.result.ValidationResult;
+import com.r6overwatch.overwatchapi.validation.validators.impl.games.GameValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller that exposes various endpoints for information about {@link Game}
@@ -36,6 +39,9 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
 
     @Resource(name = "gameFacade")
     private GameFacade gameFacade;
+
+    @Resource(name = "gameValidator")
+    private GameValidator gameValidator;
 
 
     //  METHODS
@@ -138,5 +144,35 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
 
         LOGGER.error("No results were found for playerCode {}, seasonCode {}, limitCode {}", playerCode, seasonCode, limit);
         return new StandardJsonResponse(false, null, "No results were found for playerCode " + playerCode + ", seasonCode " + seasonCode + ", limitCode " + limitCode);
+    }
+
+
+    //  *************** POST ***************
+
+    /**
+     * Creates a new {@link Game} in the system
+     *
+     * @param params request params containing information for a new {@link Game}
+     * @return newly created {@link Game}
+     */
+    @PostMapping(value = "/enter")
+    @ApiOperation("Creates a new game for the given request body. Creating a game also updates all statistical information associated with the given players and squad(s)")
+    public StandardJsonResponse enterGame(final @RequestBody Map<String, Object> params) {
+
+        ValidationResult result = this.gameValidator.validate(params);
+
+        if (result.isValid()) {
+            GameResource resource = this.gameFacade.create(params);
+
+            if (resource != null) {
+                return new StandardJsonResponse(true, resource, StringUtils.EMPTY);
+            }
+
+            LOGGER.error("The game could not be created");
+            return new StandardJsonResponse(false, null, "The game could not be created");
+        }
+
+        LOGGER.error("Validation failed with message {}", result.getMessage());
+        return new StandardJsonResponse(false, null, result.getMessage());
     }
 }

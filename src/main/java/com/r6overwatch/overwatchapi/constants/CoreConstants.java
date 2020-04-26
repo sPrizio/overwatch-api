@@ -4,6 +4,7 @@ import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerSea
 
 import java.util.AbstractMap;
 import java.util.DoubleSummaryStatistics;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -20,6 +21,8 @@ public class CoreConstants {
     private CoreConstants() {
         throw new UnsupportedOperationException("Utility classes should not be instantiated");
     }
+
+    public static final Locale OVERWATCH_LOCALE = Locale.CANADA;
 
     //  statistical collections
 
