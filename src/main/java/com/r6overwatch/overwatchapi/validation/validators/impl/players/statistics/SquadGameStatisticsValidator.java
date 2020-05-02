@@ -61,11 +61,11 @@ public class SquadGameStatisticsValidator extends AbstractOverwatchValidator imp
             return new ValidationResult(ValidationResponseResult.FAILED, "No squad exists for the given id");
         }
 
-        if (EnumUtils.isValidEnum(GameSide.class, gameSide)) {
+        if (!EnumUtils.isValidEnum(GameSide.class, gameSide)) {
             return new ValidationResult(ValidationResponseResult.FAILED, "The given status was not a valid option. Valid options are: " + Arrays.stream(GameSide.values()).collect(Collectors.toList()));
         }
 
-        if (EnumUtils.isValidEnum(MapResult.class, mapResult)) {
+        if (!EnumUtils.isValidEnum(MapResult.class, mapResult)) {
             return new ValidationResult(ValidationResponseResult.FAILED, "The given status was not a valid option. Valid options are: " + Arrays.stream(MapResult.values()).collect(Collectors.toList()));
         }
 

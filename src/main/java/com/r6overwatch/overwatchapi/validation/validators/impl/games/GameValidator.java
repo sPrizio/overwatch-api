@@ -26,7 +26,7 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class GameValidator extends AbstractOverwatchValidator implements OverwatchValidator {
 
-    private static final List<String> EXPECTED_PARAMS = Arrays.asList("season", "map", "gameDateTime", "squadGameStatistics");
+    private static final List<String> EXPECTED_PARAMS = Arrays.asList("seasonId", "mapId", "gameDateTime", "squadGameStatistics");
 
     @Resource(name = "mapService")
     private MapService mapService;
@@ -48,8 +48,8 @@ public class GameValidator extends AbstractOverwatchValidator implements Overwat
             return new ValidationResult(ValidationResponseResult.FAILED, super.isMissingParam(values, EXPECTED_PARAMS));
         }
 
-        String seasonId = values.get("season").toString();
-        String mapId = values.get("map").toString();
+        String seasonId = values.get("seasonId").toString();
+        String mapId = values.get("mapId").toString();
         String gameDateTime = values.get("gameDateTime").toString();
         Map<String, Object> squadGameStatistics = (Map<String, Object>) values.get("squadGameStatistics");
 
@@ -69,7 +69,7 @@ public class GameValidator extends AbstractOverwatchValidator implements Overwat
             return new ValidationResult(ValidationResponseResult.FAILED, "No map exists for the given id");
         }
 
-        if (super.isInvalidDateForFormat(gameDateTime, "yyyy-MM-dd hh:mm:ss")) {
+        if (super.isInvalidDateForFormat(gameDateTime, "yyyy-MM-dd HH:mm:ss")) {
             return new ValidationResult(ValidationResponseResult.FAILED, "Invalid date format. Date must be of the format 'yyyy-MM-dd HH:mm:ss'");
         }
 

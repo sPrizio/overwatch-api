@@ -70,7 +70,7 @@ public class PlayerGameStatisticsValidator extends AbstractOverwatchValidator im
             return new ValidationResult(ValidationResponseResult.FAILED, "Negative values are not allowed");
         }
 
-        if (super.isTooLarge(s) || super.isTooLarge(k) || super.isTooLarge(a) || super.isTooLarge(d)) {
+        if (super.isTooLarge(k) || super.isTooLarge(a) || super.isTooLarge(d)) {
             return new ValidationResult(ValidationResponseResult.FAILED, "The given values were too large");
         }
 

@@ -48,7 +48,7 @@ public class GameTranslator implements OverwatchTranslator<Game> {
                 return new Game(
                         season.get(),
                         map.get(),
-                        LocalDateTime.parse(values.get("gameDateTime").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")),
+                        LocalDateTime.parse(values.get("gameDateTime").toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                         this.squadGameStatisticsTranslator.translate((java.util.Map<String, Object>) values.get("squadGameStatistics"))
                 );
             } catch (Exception e) {
