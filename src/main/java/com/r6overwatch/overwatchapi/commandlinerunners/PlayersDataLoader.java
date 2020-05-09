@@ -6,6 +6,7 @@ import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerGameStatistics;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerSeasonStatistics;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadSeasonStatistics;
+import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.players.player.PlayerRepository;
 import com.r6overwatch.overwatchapi.repositories.players.squad.SquadRepository;
 import com.r6overwatch.overwatchapi.repositories.season.SeasonRepository;
@@ -183,6 +184,15 @@ public class PlayersDataLoader implements CommandLineRunner {
      * Loads {@link SquadSeasonStatistics} data
      */
     private void loadSquadSeasonStatistics() {
-        //  TODO: implement this method
+        Optional<Squad> squad = this.squadRepository.findById(1L);
+        Season season = this.seasonRepository.findBySeasonYearAndSeasonNumber(5, 1);
+
+        if (squad.isPresent() && season != null) {
+            SquadSeasonStatistics s1 = new SquadSeasonStatistics(season, 45, 44);
+            squad.get().setSquadSeasons(Sets.newHashSet(s1));
+
+            this.squadRepository.save(squad.get());
+        }
+
     }
 }

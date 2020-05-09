@@ -1,8 +1,13 @@
 package com.r6overwatch.overwatchapi.services.entities.players;
 
 import com.google.common.collect.Lists;
+import com.r6overwatch.overwatchapi.enums.MapResult;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
+import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
+import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadSeasonStatistics;
+import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.players.squad.SquadRepository;
+import com.r6overwatch.overwatchapi.repositories.players.statistics.SquadSeasonStatisticsRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
 import com.r6overwatch.overwatchapi.translators.players.SquadTranslator;
 import org.slf4j.Logger;
@@ -25,6 +30,9 @@ public class SquadService implements OverwatchEntityService<Squad> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SquadService.class);
 
+    @Resource(name = "squadSeasonStatisticsRepository")
+    private SquadSeasonStatisticsRepository squadSeasonStatisticsRepository;
+
     @Resource(name = "squadRepository")
     private SquadRepository squadRepository;
 
@@ -33,6 +41,29 @@ public class SquadService implements OverwatchEntityService<Squad> {
 
 
     //  METHODS
+
+    /**
+     * Updates the {@link SquadSeasonStatistics} with the given {@link SquadGameStatistics} for the given {@link Season}
+     *
+     * @param statistics {@link SquadGameStatistics}
+     * @param season {@link Season}
+     */
+    public void updateStats(SquadGameStatistics statistics, Season season) {
+
+        if (statistics != null && season != null) {
+            SquadSeasonStatistics seasonStatistics = statistics.getSquad().getSeasonStatisticsForSeason(season);
+
+            if (seasonStatistics != null) {
+                if (statistics.getMapResult().equals(MapResult.WIN)) {
+                    seasonStatistics.incrementWins();
+                } else if (statistics.getMapResult().equals(MapResult.LOSS)) {
+                    seasonStatistics.incrementLosses();
+                }
+
+                this.squadSeasonStatisticsRepository.save(seasonStatistics);
+            }
+        }
+    }
 
     @Override
     public void refresh(Squad entity) {

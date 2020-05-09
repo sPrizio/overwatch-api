@@ -3,6 +3,7 @@ package com.r6overwatch.overwatchapi.resources.entities.players;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.resources.entities.OverwatchResource;
 import com.r6overwatch.overwatchapi.resources.entities.players.statistics.SquadSeasonStatisticsResource;
+import com.r6overwatch.overwatchapi.resources.entities.season.SeasonResource;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,11 +31,23 @@ public class SquadResource implements OverwatchResource {
 
     @Getter
     @Setter
-    private Set<SquadSeasonStatisticsResource> squadSeasonStatistics;
+    private Set<SquadSeasonStatisticsResource> squadSeasons;
 
     @Getter
     @Setter
     private Set<PlayerResource> players;
+
+    @Getter
+    @Setter
+    private SeasonResource mostRecentSeason;
+
+    @Getter
+    @Setter
+    private SquadSeasonStatisticsResource currentSeason;
+
+    @Getter
+    @Setter
+    private SquadSeasonStatisticsResource highlightedSeason;
 
 
     //  METHODS
@@ -43,7 +56,7 @@ public class SquadResource implements OverwatchResource {
     public boolean isPresent() {
         return
                 StringUtils.isNotEmpty(this.name) &&
-                CollectionUtils.isNotEmpty(this.squadSeasonStatistics) &&
+                CollectionUtils.isNotEmpty(this.squadSeasons) &&
                 CollectionUtils.isNotEmpty(this.players);
     }
 }

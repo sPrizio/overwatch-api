@@ -67,6 +67,47 @@ public class PlayerSeasonStatistics implements OverwatchEntity, Comparable<Playe
     //  METHODS
 
     /**
+     * Increments wins by 1
+     */
+    public void incrementWins() {
+        this.wins += 1;
+    }
+
+    /**
+     * Increments losses by 1
+     */
+    public void incrementLosses() {
+        this.losses += 1;
+    }
+
+    /**
+     * Increments kills by specified increment amount
+     *
+     * @param increment amount to increment kills by
+     */
+    public void incrementKills(Integer increment) {
+        this.kills += increment;
+    }
+
+    /**
+     * Increments assists by specified increment amount
+     *
+     * @param increment amount to increment assists by
+     */
+    public void incrementAssists(Integer increment) {
+        this.assists += increment;
+    }
+
+    /**
+     * Increments deaths by specified increment amount
+     *
+     * @param increment amount to increment deaths by
+     */
+    public void incrementDeaths(Integer increment) {
+        this.deaths += increment;
+    }
+
+    /**
      * Returns the kill/death ratio
      *
      * @return returns kills divided by deaths rounded to 2 decimal places
@@ -158,6 +199,7 @@ public class PlayerSeasonStatistics implements OverwatchEntity, Comparable<Playe
     public int hashCode() {
         return Objects.hash(wins, losses, kills, assists, deaths);
     }
+
 
     //  HELPERS
 

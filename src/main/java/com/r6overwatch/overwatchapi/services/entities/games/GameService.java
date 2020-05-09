@@ -5,9 +5,13 @@ import com.r6overwatch.overwatchapi.models.entities.games.Game;
 import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerGameStatistics;
+import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.games.game.GameRepository;
+import com.r6overwatch.overwatchapi.repositories.players.statistics.SquadGameStatisticsRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
+import com.r6overwatch.overwatchapi.services.entities.players.PlayerService;
+import com.r6overwatch.overwatchapi.services.entities.players.SquadService;
 import com.r6overwatch.overwatchapi.translators.games.GameTranslator;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
@@ -34,6 +38,15 @@ public class GameService implements OverwatchEntityService<Game> {
 
     @Resource(name = "gameTranslator")
     private GameTranslator gameTranslator;
+
+    @Resource(name = "playerService")
+    private PlayerService playerService;
+
+    @Resource(name = "squadGameStatisticsRepository")
+    private SquadGameStatisticsRepository squadGameStatisticsRepository;
+
+    @Resource(name = "squadService")
+    private SquadService squadService;
 
 
     //  METHODS
@@ -118,8 +131,18 @@ public class GameService implements OverwatchEntityService<Game> {
         Game game = this.gameTranslator.translate(params);
 
         if (game != null) {
-            //  TODO: update all stats for player seasons & squad seasons
-            //return this.gameRepository.save(game);
+            //  save the squad game statistics before continuing
+            this.squadGameStatisticsRepository.save(game.getSquadGameStatistics());
+
+            SquadGameStatistics squadGameStatistics = game.getSquadGameStatistics();
+            Set<PlayerGameStatistics> playerGameStatistics = squadGameStatistics.getPlayerGameStatistics();
+
+            this.squadService.updateStats(squadGameStatistics, game.getSeason());
+            if (CollectionUtils.isNotEmpty(playerGameStatistics)) {
+                playerGameStatistics.forEach(stats -> this.playerService.updateStats(stats, squadGameStatistics, game.getSeason()));
+            }
+
+            return this.gameRepository.save(game);
         }
 
         return null;

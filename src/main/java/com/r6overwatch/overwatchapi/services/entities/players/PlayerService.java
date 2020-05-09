@@ -2,15 +2,19 @@ package com.r6overwatch.overwatchapi.services.entities.players;
 
 import com.google.common.collect.Lists;
 import com.r6overwatch.overwatchapi.enums.DateInterval;
+import com.r6overwatch.overwatchapi.enums.MapResult;
 import com.r6overwatch.overwatchapi.enums.SortOrder;
 import com.r6overwatch.overwatchapi.models.entities.games.Game;
 import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerGameStatistics;
+import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerSeasonStatistics;
+import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.models.nonentities.StatBucket;
 import com.r6overwatch.overwatchapi.models.nonentities.StatsGraphWrapper;
 import com.r6overwatch.overwatchapi.repositories.players.player.PlayerRepository;
+import com.r6overwatch.overwatchapi.repositories.players.statistics.PlayerSeasonStatisticsRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
 import com.r6overwatch.overwatchapi.services.entities.games.GameService;
 import com.r6overwatch.overwatchapi.services.entities.season.SeasonService;
@@ -47,6 +51,9 @@ public class PlayerService implements OverwatchEntityService<Player> {
     @Resource(name = "playerRepository")
     private PlayerRepository playerRepository;
 
+    @Resource(name = "playerSeasonStatisticsRepository")
+    private PlayerSeasonStatisticsRepository playerSeasonStatisticsRepository;
+
     @Resource(name = "playerTranslator")
     private PlayerTranslator playerTranslator;
 
@@ -55,6 +62,35 @@ public class PlayerService implements OverwatchEntityService<Player> {
 
 
     //  METHODS
+
+    /**
+     * Updates the {@link PlayerSeasonStatistics} with the given {@link PlayerGameStatistics} for the given {@link SquadGameStatistics}
+     * and {@link Season}
+     *
+     * @param statistics {@link PlayerSeasonStatistics}
+     * @param squadGameStatistics {@link SquadGameStatistics}
+     * @param season {@link Season}
+     */
+    public void updateStats(PlayerGameStatistics statistics, SquadGameStatistics squadGameStatistics, Season season) {
+
+        if (statistics != null && season != null) {
+            PlayerSeasonStatistics seasonStatistics = statistics.getPlayer().getSeasonStatisticsForSeason(season);
+
+            if (seasonStatistics != null) {
+                if (squadGameStatistics.getMapResult().equals(MapResult.WIN)) {
+                    seasonStatistics.incrementWins();
+                } else if (squadGameStatistics.getMapResult().equals(MapResult.LOSS)) {
+                    seasonStatistics.incrementLosses();
+                }
+
+                seasonStatistics.incrementKills(statistics.getKills());
+                seasonStatistics.incrementAssists(statistics.getAssists());
+                seasonStatistics.incrementDeaths(statistics.getDeaths());
+
+                this.playerSeasonStatisticsRepository.save(seasonStatistics);
+            }
+        }
+    }
 
     /**
      * Returns a list of {@link StatsGraphWrapper} objects for graphing of a player's recent performance for the given attribute
