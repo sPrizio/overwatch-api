@@ -74,4 +74,19 @@ public class Player implements OverwatchEntity {
         Season season = getMostRecentSeason();
         return this.playerSeasons.stream().filter(s -> s.getSeason().getId().equals(season.getId())).findFirst().orElse(null);
     }
+
+    /**
+     * Finds the season for the given {@link Season}
+     *
+     * @param season {@link Season}
+     * @return {@link PlayerSeasonStatistics}
+     */
+    public PlayerSeasonStatistics getSeasonStatisticsForSeason(Season season) {
+
+        if (season != null) {
+            return this.playerSeasons.stream().filter(s -> s.getSeason().getId().equals(season.getId())).findFirst().orElse(null);
+        }
+
+        return null;
+    }
 }

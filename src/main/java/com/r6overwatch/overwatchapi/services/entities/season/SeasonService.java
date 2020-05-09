@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.season.SeasonRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
+import com.r6overwatch.overwatchapi.translators.season.SeasonTranslator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class SeasonService implements OverwatchEntityService<Season> {
 
     @Resource(name = "seasonRepository")
     private SeasonRepository seasonRepository;
+
+    @Resource(name = "seasonTranslator")
+    private SeasonTranslator seasonTranslator;
 
 
     //  METHODS
@@ -93,7 +97,13 @@ public class SeasonService implements OverwatchEntityService<Season> {
 
     @Override
     public Season create(Map<String, Object> params) {
-        //  TODO: implement this method once we're ready to include POST
+
+        Season season = this.seasonTranslator.translate(params);
+
+        if (season != null) {
+            return this.seasonRepository.save(season);
+        }
+
         return null;
     }
 }

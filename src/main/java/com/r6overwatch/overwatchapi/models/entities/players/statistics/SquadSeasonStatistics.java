@@ -40,4 +40,21 @@ public class SquadSeasonStatistics implements OverwatchEntity {
     @Column
     @NonNull
     private Integer losses;
+
+
+    //  METHODS
+
+    /**
+     * Increments the number wins by 1 for this {@link SquadSeasonStatistics}
+     */
+    public void incrementWins() {
+        this.wins += 1;
+    }
+
+    /**
+     * Increments the number losses by 1 for this {@link SquadSeasonStatistics}
+     */
+    public void incrementLosses() {
+        this.losses += 1;
+    }
 }
