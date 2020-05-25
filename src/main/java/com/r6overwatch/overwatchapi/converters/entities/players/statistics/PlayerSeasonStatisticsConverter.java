@@ -35,6 +35,7 @@ public class PlayerSeasonStatisticsConverter implements OverwatchConverter<Playe
         if (entity != null) {
             resource.setCode(entity.getId());
             resource.setSeason(this.seasonConverter.convert(entity.getSeason()));
+            resource.setGamesPlayed(entity.getGamesPlayed());
             resource.setKills(entity.getKills());
             resource.setAssists(entity.getAssists());
             resource.setDeaths(entity.getDeaths());

@@ -180,6 +180,15 @@ public class PlayerSeasonStatistics implements OverwatchEntity, Comparable<Playe
         return 0.0;
     }
 
+    /**
+     * Returns the total number of games played
+     *
+     * @return wins + losses
+     */
+    public Integer getGamesPlayed() {
+        return this.wins + this.losses;
+    }
+
     @Override
     public int compareTo(PlayerSeasonStatistics seasonStatistics) {
         String seasonString = this.season.getSeasonYear().toString() + this.season.getSeasonNumber().toString();
