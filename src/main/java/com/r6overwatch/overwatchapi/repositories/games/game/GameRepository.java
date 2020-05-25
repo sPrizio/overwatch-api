@@ -5,6 +5,7 @@ import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.OverwatchRepository;
 import org.springframework.data.repository.CrudRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,4 +23,12 @@ public interface GameRepository extends OverwatchRepository, GameRepositoryCusto
      * @return list of {@link Game}s order by their recency
      */
     List<Game> findBySeasonOrderByGameDateTimeDesc(Season season);
+
+    /**
+     * Finds a {@link Game} by its game date time
+     *
+     * @param dateTime date & time to search for
+     * @return {@link Game} with the matching {@link LocalDateTime}
+     */
+    Game findByGameDateTime(LocalDateTime dateTime);
 }

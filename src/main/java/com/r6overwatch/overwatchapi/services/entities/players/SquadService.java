@@ -47,17 +47,18 @@ public class SquadService implements OverwatchEntityService<Squad> {
      *
      * @param statistics {@link SquadGameStatistics}
      * @param season {@link Season}
+     * @param invert flag to mark inversion. inversion means we subtract instead of adding stats
      */
-    public void updateStats(SquadGameStatistics statistics, Season season) {
+    public void updateStats(SquadGameStatistics statistics, Season season, boolean invert) {
 
         if (statistics != null && season != null) {
             SquadSeasonStatistics seasonStatistics = statistics.getSquad().getSeasonStatisticsForSeason(season);
 
             if (seasonStatistics != null) {
                 if (statistics.getMapResult().equals(MapResult.WIN)) {
-                    seasonStatistics.incrementWins();
+                    seasonStatistics.incrementWins(invert);
                 } else if (statistics.getMapResult().equals(MapResult.LOSS)) {
-                    seasonStatistics.incrementLosses();
+                    seasonStatistics.incrementLosses(invert);
                 }
 
                 this.squadSeasonStatisticsRepository.save(seasonStatistics);

@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,27 @@ public class GameService implements OverwatchEntityService<Game> {
 
 
     //  METHODS
+
+    /**
+     * Finds a {@link Game} by its game date time
+     *
+     * @param dateTime date & time to search for
+     * @return {@link Game} with the matching {@link LocalDateTime}
+     */
+    public Optional<Game> findGameByDateTime(LocalDateTime dateTime) {
+
+        if (dateTime == null) {
+            LOGGER.error("dateTime was null or empty");
+            return Optional.empty();
+        }
+
+        try {
+            return Optional.ofNullable(this.gameRepository.findByGameDateTime(dateTime));
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return Optional.empty();
+        }
+    }
 
     /**
      * Finds games for the given {@link Squad} and {@link Season}
@@ -122,7 +144,19 @@ public class GameService implements OverwatchEntityService<Game> {
 
     @Override
     public void delete(Long id) {
-        find(id).ifPresent(game -> this.gameRepository.deleteById(game.getId()));
+
+        Optional<Game> game = find(id);
+        if (game.isPresent()) {
+            SquadGameStatistics squadGameStatistics = game.get().getSquadGameStatistics();
+            Set<PlayerGameStatistics> playerGameStatistics = squadGameStatistics.getPlayerGameStatistics();
+
+            this.squadService.updateStats(squadGameStatistics, game.get().getSeason(), true);
+            if (CollectionUtils.isNotEmpty(playerGameStatistics)) {
+                playerGameStatistics.forEach(stats -> this.playerService.updateStats(stats, squadGameStatistics, game.get().getSeason(), true));
+            }
+
+            this.gameRepository.deleteById(game.get().getId());
+        }
     }
 
     @Override
@@ -137,9 +171,9 @@ public class GameService implements OverwatchEntityService<Game> {
             SquadGameStatistics squadGameStatistics = game.getSquadGameStatistics();
             Set<PlayerGameStatistics> playerGameStatistics = squadGameStatistics.getPlayerGameStatistics();
 
-            this.squadService.updateStats(squadGameStatistics, game.getSeason());
+            this.squadService.updateStats(squadGameStatistics, game.getSeason(), false);
             if (CollectionUtils.isNotEmpty(playerGameStatistics)) {
-                playerGameStatistics.forEach(stats -> this.playerService.updateStats(stats, squadGameStatistics, game.getSeason()));
+                playerGameStatistics.forEach(stats -> this.playerService.updateStats(stats, squadGameStatistics, game.getSeason(), false));
             }
 
             return this.gameRepository.save(game);

@@ -18,6 +18,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -174,5 +176,21 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
 
         LOGGER.error("Validation failed with message {}", result.getMessage());
         return new StandardJsonResponse(false, null, result.getMessage());
+    }
+
+
+    //  *************** DELETE ***************
+
+    /**
+     * Deletes a game by its id. Based on our data model, all related details classes and scoring plays
+     * will also be deleted
+     *
+     * @param id game id
+     * @return result of the deletion
+     */
+    @DeleteMapping("/delete/{id}")
+    public StandardJsonResponse deleteGame(final @PathVariable("id") Long id) {
+        this.gameFacade.delete(id);
+        return new StandardJsonResponse(true, null, "Deleted game with id " + id);
     }
 }

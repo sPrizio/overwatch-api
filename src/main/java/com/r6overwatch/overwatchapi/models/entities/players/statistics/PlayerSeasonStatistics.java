@@ -68,16 +68,20 @@ public class PlayerSeasonStatistics implements OverwatchEntity, Comparable<Playe
 
     /**
      * Increments wins by 1
+     *
+     * @param invert if true, subtract
      */
-    public void incrementWins() {
-        this.wins += 1;
+    public void incrementWins(boolean invert) {
+        this.wins += invert ? -1 : 1;
     }
 
     /**
      * Increments losses by 1
+     *
+     * @param invert if true, subtract
      */
-    public void incrementLosses() {
-        this.losses += 1;
+    public void incrementLosses(boolean invert) {
+        this.losses += invert ? -1 : 1;
     }
 
     /**
