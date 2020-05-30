@@ -66,8 +66,9 @@ public class PlayerConverter implements PlayersConverter<Player, PlayerResource>
 
         if (entity != null) {
             resource.setCode(entity.getId());
-            resource.setAlias(entity.getAlias());
             resource.setName(entity.getName());
+            resource.setAlias(entity.getAlias());
+            resource.setRole(entity.getRole());
             resource.setPlayerSeasons(new TreeSet<>(this.playerSeasonStatisticsConverter.convertAll(entity.getPlayerSeasons())));
             resource.setMostRecentSeason(this.seasonConverter.convert(entity.getMostRecentSeason()));
             resource.setCurrentSeason(this.playerSeasonStatisticsConverter.convert(entity.getCurrentSeason()));

@@ -74,7 +74,7 @@ public class SquadConverter implements PlayersConverter<Squad, SquadResource> {
         if (entity != null) {
             resource.setCode(entity.getId());
             resource.setName(entity.getName());
-            resource.setPlayers(Sets.newHashSet(this.playerConverter.convertAll(entity.getPlayers())));
+            resource.setPlayers(Sets.newTreeSet(this.playerConverter.convertAll(entity.getPlayers())));
             resource.setSquadSeasons(Sets.newHashSet(this.squadSeasonStatisticsConverter.convertAll(entity.getSquadSeasons())));
             resource.setMostRecentSeason(this.seasonConverter.convert(entity.getMostRecentSeason()));
             resource.setCurrentSeason(this.squadSeasonStatisticsConverter.convert(entity.getCurrentSeason()));

@@ -1,6 +1,7 @@
 package com.r6overwatch.overwatchapi.commandlinerunners;
 
 import com.google.common.collect.Sets;
+import com.r6overwatch.overwatchapi.enums.PlayerRole;
 import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.models.entities.players.Squad;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerGameStatistics;
@@ -55,11 +56,11 @@ public class PlayersDataLoader implements CommandLineRunner {
      * Loads {@link Player} data
      */
     private void loadPlayerData() {
-        this.playerRepository.save(new Player("Stephen Prizio", "xxPlazmaBurstxx"));
-        this.playerRepository.save(new Player("Paolo Drago", "KushMonster55"));
-        this.playerRepository.save(new Player("Alessandro Drago", "Odysseus155"));
-        this.playerRepository.save(new Player("Vince Morello", "BrutalKilla47"));
-        this.playerRepository.save(new Player("Anthony Frenza", "XMonsterAntX"));
+        this.playerRepository.save(new Player("Stephen Prizio", "xxPlazmaBurstxx", PlayerRole.FLEX));
+        this.playerRepository.save(new Player("Paolo Drago", "KushMonster55", PlayerRole.FLEX));
+        this.playerRepository.save(new Player("Alessandro Drago", "Odysseus155", PlayerRole.SUPPORT));
+        this.playerRepository.save(new Player("Vince Morello", "BrutalKilla47", PlayerRole.FRAGGER));
+        this.playerRepository.save(new Player("Anthony Frenza", "XMonsterAntX", PlayerRole.SUPPORT));
     }
 
     /**
@@ -188,7 +189,7 @@ public class PlayersDataLoader implements CommandLineRunner {
         Season season = this.seasonRepository.findBySeasonYearAndSeasonNumber(5, 1);
 
         if (squad.isPresent() && season != null) {
-            SquadSeasonStatistics s1 = new SquadSeasonStatistics(season, 45, 44);
+            SquadSeasonStatistics s1 = new SquadSeasonStatistics(season, 45, 44, 132, 139);
             squad.get().setSquadSeasons(Sets.newHashSet(s1));
 
             this.squadRepository.save(squad.get());

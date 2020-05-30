@@ -78,9 +78,10 @@ public class GameService implements OverwatchEntityService<Game> {
      *
      * @param squad {@link Squad}'s games to obtain
      * @param season {@link Season} desired season
+     * @param limit the number of results to return, if null, no limit will be applied
      * @return list of {@link Game}s sorted by recency with regards to date time
      */
-    public List<Game> findGamesBySquadAndSeasonSortedByDate(Squad squad, Season season) {
+    public List<Game> findGamesBySquadAndSeasonSortedByDate(Squad squad, Season season, Integer limit) {
 
         if (squad == null || season == null) {
             LOGGER.error("One or more of the required parameters was null or empty: squad {}, season {}", squad, season);
@@ -91,7 +92,7 @@ public class GameService implements OverwatchEntityService<Game> {
 
         if (CollectionUtils.isNotEmpty(seasonGames)) {
             List<Game> blue = seasonGames.stream().filter(game -> game.getSquadGameStatistics().getSquad().getId().equals(squad.getId())).collect(Collectors.toList());
-            return blue.stream().sorted(Comparator.comparing(Game::getGameDateTime).reversed()).collect(Collectors.toList());
+            return limit != null ? blue.stream().sorted(Comparator.comparing(Game::getGameDateTime).reversed()).limit(limit).collect(Collectors.toList()) : blue.stream().sorted(Comparator.comparing(Game::getGameDateTime).reversed()).collect(Collectors.toList());
         }
 
         return new ArrayList<>();
