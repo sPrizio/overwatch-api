@@ -2,6 +2,7 @@ package com.r6overwatch.overwatchapi.controllers.ui;
 
 import com.r6overwatch.overwatchapi.enums.SortOrder;
 import com.r6overwatch.overwatchapi.facades.entities.games.GameFacade;
+import com.r6overwatch.overwatchapi.facades.entities.games.MapFacade;
 import com.r6overwatch.overwatchapi.facades.entities.players.PlayerFacade;
 import com.r6overwatch.overwatchapi.facades.entities.players.SquadFacade;
 import com.r6overwatch.overwatchapi.facades.entities.season.SeasonFacade;
@@ -25,6 +26,9 @@ public class UIController {
 
     @Resource(name = "gameFacade")
     private GameFacade gameFacade;
+
+    @Resource(name = "mapFacade")
+    private MapFacade mapFacade;
 
     @Resource(name = "playerFacade")
     private PlayerFacade playerFacade;
@@ -54,5 +58,13 @@ public class UIController {
         model.addAttribute("recentGames", this.gameFacade.findGamesBySquadAndSeasonSortedByDate(1L, 17L, 10));
 
         return "squad";
+    }
+
+    @GetMapping("/maps")
+    public String maps(final Model model) {
+        model.addAttribute("mapDetails", this.mapFacade.findMapDetailsForSquad(1L, 17L));
+        model.addAttribute("squad", this.squadFacade.find(1L));
+
+        return "maps";
     }
 }

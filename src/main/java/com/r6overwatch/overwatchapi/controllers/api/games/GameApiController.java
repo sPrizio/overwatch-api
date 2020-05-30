@@ -147,7 +147,6 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
 
         LOGGER.error("No results were found for squadCode {}, seasonCode {}, limitCode {}", squadId, seasonCode, limit);
         return new StandardJsonResponse(false, null, "No results were found for squadCode " + squadId + ", seasonCode " + seasonCode + ", limitCode " + limitCode);
-
     }
 
 

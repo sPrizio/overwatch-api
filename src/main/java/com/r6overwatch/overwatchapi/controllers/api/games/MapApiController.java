@@ -4,17 +4,22 @@ import com.r6overwatch.overwatchapi.controllers.AbstractOverwatchController;
 import com.r6overwatch.overwatchapi.controllers.response.StandardJsonResponse;
 import com.r6overwatch.overwatchapi.facades.entities.games.MapFacade;
 import com.r6overwatch.overwatchapi.models.entities.games.Map;
+import com.r6overwatch.overwatchapi.models.entities.players.Squad;
+import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.resources.entities.games.MapResource;
+import com.r6overwatch.overwatchapi.resources.nonentities.MapDetails;
 import com.r6overwatch.overwatchapi.utils.OverwatchUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Controller that exposes various endpoints for information about {@link Map}
@@ -91,5 +96,36 @@ public class MapApiController extends AbstractOverwatchController<MapResource> {
 
         LOGGER.error("No map found for name {}", name);
         return new StandardJsonResponse(false, null, "No map found for name " + name);
+    }
+
+    /**
+     * Fetches a list of {@link MapDetails} for the given squad and season code
+     *
+     * @param squadCode {@link Squad} to consider
+     * @param seasonCode {@link Season} to consider
+     * @return list of {@link MapDetails}
+     */
+    @GetMapping("/map-details")
+    @ApiOperation("Fetches a squad's performance details for each map played in a given season")
+    public StandardJsonResponse getMapDetailsForSquadAndSeason(
+            final @RequestParam("squadCode") @ApiParam("Code for the desired squad") String squadCode,
+            final @RequestParam("seasonCode") @ApiParam("Code for the season to be obtained") String seasonCode
+    ) {
+        Long squadId = OverwatchUtils.parseLong(squadCode);
+        Long seasonId = OverwatchUtils.parseLong(seasonCode);
+
+        if (OverwatchUtils.areNonNull(squadId, seasonId)) {
+            List<MapDetails> mapDetails = this.mapFacade.findMapDetailsForSquad(squadId, seasonId);
+
+            if (CollectionUtils.isNotEmpty(mapDetails)) {
+                return new StandardJsonResponse(true, mapDetails, StringUtils.EMPTY);
+            }
+        }  else {
+            LOGGER.error("One or more of the required params was null or empty. squadCode {}, seasonCode {}", squadId, seasonCode);
+            return new StandardJsonResponse(false, null, "One or more of the required params was null or empty. squadCode " + squadId + ", seasonCode " + seasonCode);
+        }
+
+        LOGGER.error("No results were found for squadCode {}, seasonCode {}", squadId, seasonCode);
+        return new StandardJsonResponse(false, null, "No results were found for squadCode " + squadId + ", seasonCode " + seasonCode);
     }
 }

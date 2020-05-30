@@ -59,7 +59,7 @@
 </section>
 
 <div class="container">
-    <small>As of May 25<sup>th</sup>, 2020</small>
+    <small>As of May 30<sup>th</sup>, 2020</small>
     <br />
     <div class="columns is-multiline">
         <#list squad.players as player>
