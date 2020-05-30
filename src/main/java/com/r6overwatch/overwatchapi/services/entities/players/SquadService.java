@@ -10,8 +10,6 @@ import com.r6overwatch.overwatchapi.repositories.players.squad.SquadRepository;
 import com.r6overwatch.overwatchapi.repositories.players.statistics.SquadSeasonStatisticsRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
 import com.r6overwatch.overwatchapi.translators.players.SquadTranslator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,8 +25,6 @@ import java.util.Optional;
  */
 @Service
 public class SquadService implements OverwatchEntityService<Squad> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SquadService.class);
 
     @Resource(name = "squadSeasonStatisticsRepository")
     private SquadSeasonStatisticsRepository squadSeasonStatisticsRepository;
@@ -47,18 +43,22 @@ public class SquadService implements OverwatchEntityService<Squad> {
      *
      * @param statistics {@link SquadGameStatistics}
      * @param season {@link Season}
+     * @param invert flag to mark inversion. inversion means we subtract instead of adding stats
      */
-    public void updateStats(SquadGameStatistics statistics, Season season) {
+    public void updateStats(SquadGameStatistics statistics, Season season, boolean invert) {
 
         if (statistics != null && season != null) {
             SquadSeasonStatistics seasonStatistics = statistics.getSquad().getSeasonStatisticsForSeason(season);
 
             if (seasonStatistics != null) {
                 if (statistics.getMapResult().equals(MapResult.WIN)) {
-                    seasonStatistics.incrementWins();
+                    seasonStatistics.incrementWins(invert);
                 } else if (statistics.getMapResult().equals(MapResult.LOSS)) {
-                    seasonStatistics.incrementLosses();
+                    seasonStatistics.incrementLosses(invert);
                 }
+
+                seasonStatistics.incrementRoundsWon(handleInversion(statistics.getRoundsWon(), invert));
+                seasonStatistics.incrementRoundsLost(handleInversion(statistics.getRoundsLost(), invert));
 
                 this.squadSeasonStatisticsRepository.save(seasonStatistics);
             }
@@ -100,5 +100,23 @@ public class SquadService implements OverwatchEntityService<Squad> {
         }
 
         return null;
+    }
+
+
+    //  HELPERS
+
+    /**
+     * Inverts an integer's sign
+     *
+     * @param integer integer to invert
+     * @param invert if true, invert
+     * @return integer
+     */
+    private Integer handleInversion(Integer integer, boolean invert) {
+        if (invert) {
+            return integer * -1;
+        }
+
+        return integer;
     }
 }

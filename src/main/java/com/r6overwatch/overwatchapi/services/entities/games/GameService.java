@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,13 +53,35 @@ public class GameService implements OverwatchEntityService<Game> {
     //  METHODS
 
     /**
+     * Finds a {@link Game} by its game date time
+     *
+     * @param dateTime date & time to search for
+     * @return {@link Game} with the matching {@link LocalDateTime}
+     */
+    public Optional<Game> findGameByDateTime(LocalDateTime dateTime) {
+
+        if (dateTime == null) {
+            LOGGER.error("dateTime was null or empty");
+            return Optional.empty();
+        }
+
+        try {
+            return Optional.ofNullable(this.gameRepository.findByGameDateTime(dateTime));
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            return Optional.empty();
+        }
+    }
+
+    /**
      * Finds games for the given {@link Squad} and {@link Season}
      *
      * @param squad {@link Squad}'s games to obtain
      * @param season {@link Season} desired season
+     * @param limit the number of results to return, if null, no limit will be applied
      * @return list of {@link Game}s sorted by recency with regards to date time
      */
-    public List<Game> findGamesBySquadAndSeasonSortedByDate(Squad squad, Season season) {
+    public List<Game> findGamesBySquadAndSeasonSortedByDate(Squad squad, Season season, Integer limit) {
 
         if (squad == null || season == null) {
             LOGGER.error("One or more of the required parameters was null or empty: squad {}, season {}", squad, season);
@@ -69,7 +92,7 @@ public class GameService implements OverwatchEntityService<Game> {
 
         if (CollectionUtils.isNotEmpty(seasonGames)) {
             List<Game> blue = seasonGames.stream().filter(game -> game.getSquadGameStatistics().getSquad().getId().equals(squad.getId())).collect(Collectors.toList());
-            return blue.stream().sorted(Comparator.comparing(Game::getGameDateTime).reversed()).collect(Collectors.toList());
+            return limit != null ? blue.stream().sorted(Comparator.comparing(Game::getGameDateTime).reversed()).limit(limit).collect(Collectors.toList()) : blue.stream().sorted(Comparator.comparing(Game::getGameDateTime).reversed()).collect(Collectors.toList());
         }
 
         return new ArrayList<>();
@@ -122,7 +145,19 @@ public class GameService implements OverwatchEntityService<Game> {
 
     @Override
     public void delete(Long id) {
-        find(id).ifPresent(game -> this.gameRepository.deleteById(game.getId()));
+
+        Optional<Game> game = find(id);
+        if (game.isPresent()) {
+            SquadGameStatistics squadGameStatistics = game.get().getSquadGameStatistics();
+            Set<PlayerGameStatistics> playerGameStatistics = squadGameStatistics.getPlayerGameStatistics();
+
+            this.squadService.updateStats(squadGameStatistics, game.get().getSeason(), true);
+            if (CollectionUtils.isNotEmpty(playerGameStatistics)) {
+                playerGameStatistics.forEach(stats -> this.playerService.updateStats(stats, squadGameStatistics, game.get().getSeason(), true));
+            }
+
+            this.gameRepository.deleteById(game.get().getId());
+        }
     }
 
     @Override
@@ -137,9 +172,9 @@ public class GameService implements OverwatchEntityService<Game> {
             SquadGameStatistics squadGameStatistics = game.getSquadGameStatistics();
             Set<PlayerGameStatistics> playerGameStatistics = squadGameStatistics.getPlayerGameStatistics();
 
-            this.squadService.updateStats(squadGameStatistics, game.getSeason());
+            this.squadService.updateStats(squadGameStatistics, game.getSeason(), false);
             if (CollectionUtils.isNotEmpty(playerGameStatistics)) {
-                playerGameStatistics.forEach(stats -> this.playerService.updateStats(stats, squadGameStatistics, game.getSeason()));
+                playerGameStatistics.forEach(stats -> this.playerService.updateStats(stats, squadGameStatistics, game.getSeason(), false));
             }
 
             return this.gameRepository.save(game);

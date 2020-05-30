@@ -70,22 +70,23 @@ public class PlayerService implements OverwatchEntityService<Player> {
      * @param statistics {@link PlayerSeasonStatistics}
      * @param squadGameStatistics {@link SquadGameStatistics}
      * @param season {@link Season}
+     * @param invert flag to mark inversion. inversion means we subtract instead of adding stats
      */
-    public void updateStats(PlayerGameStatistics statistics, SquadGameStatistics squadGameStatistics, Season season) {
+    public void updateStats(PlayerGameStatistics statistics, SquadGameStatistics squadGameStatistics, Season season, boolean invert) {
 
         if (statistics != null && season != null) {
             PlayerSeasonStatistics seasonStatistics = statistics.getPlayer().getSeasonStatisticsForSeason(season);
 
             if (seasonStatistics != null) {
                 if (squadGameStatistics.getMapResult().equals(MapResult.WIN)) {
-                    seasonStatistics.incrementWins();
+                    seasonStatistics.incrementWins(invert);
                 } else if (squadGameStatistics.getMapResult().equals(MapResult.LOSS)) {
-                    seasonStatistics.incrementLosses();
+                    seasonStatistics.incrementLosses(invert);
                 }
 
-                seasonStatistics.incrementKills(statistics.getKills());
-                seasonStatistics.incrementAssists(statistics.getAssists());
-                seasonStatistics.incrementDeaths(statistics.getDeaths());
+                seasonStatistics.incrementKills(handleInversion(statistics.getKills(), invert));
+                seasonStatistics.incrementAssists(handleInversion(statistics.getAssists(), invert));
+                seasonStatistics.incrementDeaths(handleInversion(statistics.getDeaths(), invert));
 
                 this.playerSeasonStatisticsRepository.save(seasonStatistics);
             }
@@ -326,5 +327,20 @@ public class PlayerService implements OverwatchEntityService<Player> {
             default:
                 return bucket.getStart().format(DateTimeFormatter.ofPattern("MMM dd")).replace(".", StringUtils.EMPTY);
         }
+    }
+
+    /**
+     * Inverts an integer's sign
+     *
+     * @param integer integer to invert
+     * @param invert if true, invert
+     * @return integer
+     */
+    private Integer handleInversion(Integer integer, boolean invert) {
+        if (invert) {
+            return integer * -1;
+        }
+
+        return integer;
     }
 }

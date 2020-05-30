@@ -1,7 +1,9 @@
 package com.r6overwatch.overwatchapi.translators.players;
 
+import com.r6overwatch.overwatchapi.enums.PlayerRole;
 import com.r6overwatch.overwatchapi.models.entities.players.Player;
 import com.r6overwatch.overwatchapi.translators.OverwatchTranslator;
+import org.apache.commons.lang3.EnumUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -20,6 +22,7 @@ public class PlayerTranslator implements OverwatchTranslator<Player> {
 
     @Override
     public Player translate(Map<String, Object> values) {
-        return new Player(values.get("name").toString(), values.get("alias").toString());
+        PlayerRole role = EnumUtils.isValidEnum(PlayerRole.class, values.get("role").toString()) ? PlayerRole.valueOf(values.get("role").toString()) : PlayerRole.FLEX;
+        return new Player(values.get("name").toString(), values.get("alias").toString(), role);
     }
 }

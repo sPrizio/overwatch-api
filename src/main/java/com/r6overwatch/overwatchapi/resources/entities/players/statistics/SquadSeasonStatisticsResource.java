@@ -26,11 +26,31 @@ public class SquadSeasonStatisticsResource implements OverwatchResource {
 
     @Getter
     @Setter
+    private Integer gamesPlayed;
+
+    @Getter
+    @Setter
     private Integer wins;
 
     @Getter
     @Setter
     private Integer losses;
+
+    @Getter
+    @Setter
+    private Double winPercentage;
+
+    @Getter
+    @Setter
+    private Integer roundsWon;
+
+    @Getter
+    @Setter
+    private Integer roundsLost;
+
+    @Getter
+    @Setter
+    private Integer differential;
 
 
     //  METHODS
@@ -39,7 +59,12 @@ public class SquadSeasonStatisticsResource implements OverwatchResource {
     public boolean isPresent() {
         return
                 this.season.isPresent() &&
+                this.gamesPlayed != null &&
                 this.wins != null &&
-                this.losses != null;
+                this.losses != null &&
+                this.winPercentage != null &&
+                this.roundsWon != null &&
+                this.roundsLost != null &&
+                this.differential != null;
     }
 }

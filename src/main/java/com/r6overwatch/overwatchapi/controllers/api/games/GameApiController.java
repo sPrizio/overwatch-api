@@ -80,38 +80,6 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
     }
 
     /**
-     * Finds all {@link Game}s for the given {@link Squad} code and for the specific {@link Season} code
-     *
-     * @param squadCode code of the desired {@link Squad}
-     * @param seasonCode code of the desired {@link Season}
-     * @return list of {@link Game}s sorted by their date in descending order
-     */
-    @GetMapping("/games")
-    @ApiOperation("Fetches all games by their squad and for a specific season")
-    public StandardJsonResponse getAllGamesForSquadAndSeason(
-            final @RequestParam("squadCode") @ApiParam("Code for the desired squad") String squadCode,
-            final @RequestParam("seasonCode") @ApiParam("Code for the season to be obtained") String seasonCode
-    ) {
-
-        Long squadId = OverwatchUtils.parseLong(squadCode);
-        Long seasonId = OverwatchUtils.parseLong(seasonCode);
-
-        if (OverwatchUtils.areNonNull(squadId, seasonId)) {
-            List<GameResource> games = this.gameFacade.findGamesBySquadAndSeasonSortedByDate(squadId, seasonId);
-
-            if (CollectionUtils.isNotEmpty(games)) {
-                return new StandardJsonResponse(true, games, StringUtils.EMPTY);
-            }
-        } else {
-            LOGGER.error("One or more of the required params was null or empty. squadCode {}, seasonCode {}", squadCode, seasonCode);
-            return new StandardJsonResponse(false, null, "One or more of the required params was null or empty. squadCode " + squadCode + ", seasonCode " + seasonCode);
-        }
-
-        LOGGER.error("No results were found for squadCode {}, seasonCode {}", squadCode, seasonCode);
-        return new StandardJsonResponse(false, null, "No results were found for squadCode " + squadCode + ", seasonCode " + seasonCode);
-    }
-
-    /**
      * Finds all {@link Game}s for the given {@link Player} code and for the specific {@link Season} code
      *
      * @param playerCode code of the desired {@link Player}
@@ -146,6 +114,42 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
         return new StandardJsonResponse(false, null, "No results were found for playerCode " + playerCode + ", seasonCode " + seasonCode + ", limitCode " + limitCode);
     }
 
+    /**
+     * Finds all {@link Game}s for the given {@link Squad} code and for the specific {@link Season} code
+     *
+     * @param squadCode code of the desired {@link Squad}
+     * @param seasonCode code of the desired {@link Season}
+     * @param limitCode limits the result set to the given size
+     * @return list of {@link Game}s sorted by their date in descending order
+     */
+    @GetMapping("/games/squad")
+    @ApiOperation("Fetches games by squad and for a specific season. Primary use case is for obtaining a squad's most recent games")
+    public StandardJsonResponse getRecentGamesForSquad(
+            final @RequestParam("squadCode") @ApiParam("Code for the desired squad") String squadCode,
+            final @RequestParam("seasonCode") @ApiParam("Code for the season to be obtained") String seasonCode,
+            final @RequestParam("limitCode") @ApiParam("Numerical count for the results, i.e. how many results should be returned") String limitCode
+    ) {
+
+        Long squadId = OverwatchUtils.parseLong(squadCode);
+        Long seasonId = OverwatchUtils.parseLong(seasonCode);
+        Integer limit = OverwatchUtils.parseInteger(limitCode);
+
+        if (OverwatchUtils.areNonNull(squadId, seasonId, limit)) {
+            List<GameResource> games = this.gameFacade.findGamesBySquadAndSeasonSortedByDate(squadId, seasonId, limit);
+
+            if (CollectionUtils.isNotEmpty(games)) {
+                return new StandardJsonResponse(true, games, StringUtils.EMPTY);
+            }
+        }  else {
+            LOGGER.error("One or more of the required params was null or empty. squadCode {}, seasonCode {}, limitCode {}", squadId, seasonCode, limitCode);
+            return new StandardJsonResponse(false, null, "One or more of the required params was null or empty. squadCode " + squadId + ", seasonCode " + seasonCode + ", limitCode " + limitCode);
+        }
+
+        LOGGER.error("No results were found for squadCode {}, seasonCode {}, limitCode {}", squadId, seasonCode, limit);
+        return new StandardJsonResponse(false, null, "No results were found for squadCode " + squadId + ", seasonCode " + seasonCode + ", limitCode " + limitCode);
+
+    }
+
 
     //  *************** POST ***************
 
@@ -174,5 +178,21 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
 
         LOGGER.error("Validation failed with message {}", result.getMessage());
         return new StandardJsonResponse(false, null, result.getMessage());
+    }
+
+
+    //  *************** DELETE ***************
+
+    /**
+     * Deletes a game by its id. Based on our data model, all related details classes and scoring plays
+     * will also be deleted
+     *
+     * @param id game id
+     * @return result of the deletion
+     */
+    @DeleteMapping("/delete/{id}")
+    public StandardJsonResponse deleteGame(final @PathVariable("id") Long id) {
+        this.gameFacade.delete(id);
+        return new StandardJsonResponse(true, null, "Deleted game with id " + id);
     }
 }

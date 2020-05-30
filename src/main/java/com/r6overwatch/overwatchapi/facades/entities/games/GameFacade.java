@@ -53,16 +53,17 @@ public class GameFacade implements OverwatchFacade<GameResource> {
      *
      * @param squadId {@link Squad}'s id
      * @param seasonId id of desired {@link Season}
+     * @param limit number of results to return
      * @return list of {@link Game}s sorted by recency with regards to date time
      */
-    public List<GameResource> findGamesBySquadAndSeasonSortedByDate(Long squadId, Long seasonId) {
+    public List<GameResource> findGamesBySquadAndSeasonSortedByDate(Long squadId, Long seasonId, Integer limit) {
 
         if (OverwatchUtils.areNonNull(squadId, seasonId)) {
             Optional<Squad> squad = this.squadService.find(squadId);
             Optional<Season> season = this.seasonService.find(seasonId);
 
             if (squad.isPresent() && season.isPresent()) {
-                return Lists.newArrayList(this.gameConverter.convertAll(this.gameService.findGamesBySquadAndSeasonSortedByDate(squad.get(), season.get())));
+                return Lists.newArrayList(this.gameConverter.convertAll(this.gameService.findGamesBySquadAndSeasonSortedByDate(squad.get(), season.get(), limit)));
             }
         }
 
@@ -74,6 +75,7 @@ public class GameFacade implements OverwatchFacade<GameResource> {
      *
      * @param playerId {@link Player}'s games to obtain
      * @param seasonId {@link Season} desired season
+     * @param limit number of results to return
      * @return list of {@link Game}s sorted by recency with regards to date time
      */
     public List<GameResource> findGamesByPlayerAndSeasonSortedByDateLimited(Long playerId, Long seasonId, Integer limit) {

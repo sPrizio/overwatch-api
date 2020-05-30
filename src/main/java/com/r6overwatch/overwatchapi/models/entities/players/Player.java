@@ -1,5 +1,6 @@
 package com.r6overwatch.overwatchapi.models.entities.players;
 
+import com.r6overwatch.overwatchapi.enums.PlayerRole;
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerSeasonStatistics;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
@@ -38,6 +39,12 @@ public class Player implements OverwatchEntity {
     @Column
     @NonNull
     private String alias;
+
+    @Getter
+    @Setter
+    @Column
+    @NonNull
+    private PlayerRole role;
 
     @Getter
     @Setter

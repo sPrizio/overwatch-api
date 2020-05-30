@@ -28,6 +28,10 @@ public class PlayerSeasonStatisticsResource implements OverwatchResource, Compar
 
     @Getter
     @Setter
+    private Integer gamesPlayed;
+
+    @Getter
+    @Setter
     private Integer wins;
 
     @Getter
@@ -67,7 +71,8 @@ public class PlayerSeasonStatisticsResource implements OverwatchResource, Compar
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PlayerSeasonStatisticsResource resource = (PlayerSeasonStatisticsResource) o;
-        return wins.equals(resource.wins) &&
+        return gamesPlayed.equals(resource.gamesPlayed) &&
+                wins.equals(resource.wins) &&
                 losses.equals(resource.losses) &&
                 kills.equals(resource.kills) &&
                 assists.equals(resource.assists) &&
@@ -80,7 +85,7 @@ public class PlayerSeasonStatisticsResource implements OverwatchResource, Compar
 
     @Override
     public int hashCode() {
-        return Objects.hash(wins, losses, kills, assists, deaths, kd, winPercentage, killsPerGame, deathsPerGame);
+        return Objects.hash(gamesPlayed, wins, losses, kills, assists, deaths, kd, winPercentage, killsPerGame, deathsPerGame);
     }
 
 //  METHODS

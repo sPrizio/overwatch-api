@@ -35,8 +35,13 @@ public class SquadSeasonStatisticsConverter implements OverwatchConverter<SquadS
         if (entity != null) {
             resource.setCode(entity.getId());
             resource.setSeason(this.seasonConverter.convert(entity.getSeason()));
+            resource.setGamesPlayed(entity.getGamesPlayed());
             resource.setWins(entity.getWins());
             resource.setLosses(entity.getLosses());
+            resource.setWinPercentage(entity.getWinPercentage());
+            resource.setRoundsWon(entity.getRoundsWon());
+            resource.setRoundsLost(entity.getRoundsLost());
+            resource.setDifferential(entity.getDifferential());
         }
 
         return resource;

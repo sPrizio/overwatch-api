@@ -1,6 +1,5 @@
 package com.r6overwatch.overwatchapi.resources.entities.players.statistics;
 
-import com.r6overwatch.overwatchapi.enums.GameSide;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
 import com.r6overwatch.overwatchapi.resources.entities.OverwatchResource;
 import com.r6overwatch.overwatchapi.resources.entities.players.SquadResource;

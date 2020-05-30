@@ -1,7 +1,6 @@
 package com.r6overwatch.overwatchapi.models.entities.players;
 
 import com.r6overwatch.overwatchapi.models.entities.OverwatchEntity;
-import com.r6overwatch.overwatchapi.models.entities.players.statistics.PlayerSeasonStatistics;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadSeasonStatistics;
 import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import lombok.*;
