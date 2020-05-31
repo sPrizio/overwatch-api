@@ -1,6 +1,8 @@
 package com.r6overwatch.overwatchapi.models.nonentities;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
