@@ -5,6 +5,7 @@ import com.r6overwatch.overwatchapi.models.entities.season.Season;
 import com.r6overwatch.overwatchapi.repositories.season.SeasonRepository;
 import com.r6overwatch.overwatchapi.services.entities.OverwatchEntityService;
 import com.r6overwatch.overwatchapi.translators.season.SeasonTranslator;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,42 @@ public class SeasonService implements OverwatchEntityService<Season> {
     //  METHODS
 
     /**
+     * Creates a new season that will act as the most recent/current season
+     *
+     * @param seasonName name of the new season
+     * @return newly created season
+     */
+    public Optional<Season> startNewSeason(String seasonName) {
+
+        Optional<Season> currentSeason = getCurrentSeason();
+        LocalDate now = LocalDate.now();
+
+        if (StringUtils.isNotEmpty(seasonName) && currentSeason.isPresent()) {
+            int seasonYear = currentSeason.get().getSeasonYear();
+            int seasonNumber = currentSeason.get().getSeasonNumber() + 1;
+
+            if (currentSeason.get().getReleaseDate().getYear() > now.getYear()) {
+                seasonYear += 1;
+            }
+
+            if (currentSeason.get().getReleaseDate().getYear() > now.getYear()) {
+                seasonNumber = 1;
+            }
+
+            Optional<Season> checkExisting = getSeasonForSeasonYearAndSeasonNumber(seasonYear, seasonNumber);
+            if (checkExisting.isEmpty()) {
+                return Optional.ofNullable(save(new Season(seasonName, seasonYear, seasonNumber, LocalDate.now())));
+            } else {
+                LOGGER.error("That season already exists!");
+                return Optional.empty();
+            }
+        }
+
+        LOGGER.error("No current season was found");
+        return Optional.empty();
+    }
+
+    /**
      * Obtains a {@link Season} who's season year and season number match the given input
      * Examples of inputs would be 5, 1 for Y5 S1
      *
@@ -45,6 +82,7 @@ public class SeasonService implements OverwatchEntityService<Season> {
      * @return {@link Season} if found, null otherwise
      */
     public Optional<Season> getSeasonForSeasonYearAndSeasonNumber(Integer seasonYear, Integer seasonNumber) {
+
         if (seasonYear == null || seasonNumber == null) {
             LOGGER.error("One or more of the required parameters was null or missing. seasonYear {}, seasonNumber {}", seasonYear, seasonNumber);
             return Optional.empty();

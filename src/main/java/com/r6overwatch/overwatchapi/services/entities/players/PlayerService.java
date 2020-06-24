@@ -77,19 +77,27 @@ public class PlayerService implements OverwatchEntityService<Player> {
         if (statistics != null && season != null) {
             PlayerSeasonStatistics seasonStatistics = statistics.getPlayer().getSeasonStatisticsForSeason(season);
 
-            if (seasonStatistics != null) {
-                if (squadGameStatistics.getMapResult().equals(MapResult.WIN)) {
-                    seasonStatistics.incrementWins(invert);
-                } else if (squadGameStatistics.getMapResult().equals(MapResult.LOSS)) {
-                    seasonStatistics.incrementLosses(invert);
-                }
-
-                seasonStatistics.incrementKills(handleInversion(statistics.getKills(), invert));
-                seasonStatistics.incrementAssists(handleInversion(statistics.getAssists(), invert));
-                seasonStatistics.incrementDeaths(handleInversion(statistics.getDeaths(), invert));
+            if (seasonStatistics == null) {
+                seasonStatistics = new PlayerSeasonStatistics(season, 0, 0, 0, 0, 0);
+                Set<PlayerSeasonStatistics> set = statistics.getPlayer().getPlayerSeasons();
+                set.add(seasonStatistics);
+                statistics.getPlayer().setPlayerSeasons(set);
 
                 this.playerSeasonStatisticsRepository.save(seasonStatistics);
+                save(statistics.getPlayer());
             }
+
+            if (squadGameStatistics.getMapResult().equals(MapResult.WIN)) {
+                seasonStatistics.incrementWins(invert);
+            } else if (squadGameStatistics.getMapResult().equals(MapResult.LOSS)) {
+                seasonStatistics.incrementLosses(invert);
+            }
+
+            seasonStatistics.incrementKills(handleInversion(statistics.getKills(), invert));
+            seasonStatistics.incrementAssists(handleInversion(statistics.getAssists(), invert));
+            seasonStatistics.incrementDeaths(handleInversion(statistics.getDeaths(), invert));
+
+            this.playerSeasonStatisticsRepository.save(seasonStatistics);
         }
     }
 

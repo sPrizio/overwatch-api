@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Implementation of the {@link OverwatchEntityService} architecture for {@link Squad}
@@ -50,18 +51,26 @@ public class SquadService implements OverwatchEntityService<Squad> {
         if (statistics != null && season != null) {
             SquadSeasonStatistics seasonStatistics = statistics.getSquad().getSeasonStatisticsForSeason(season);
 
-            if (seasonStatistics != null) {
-                if (statistics.getMapResult().equals(MapResult.WIN)) {
-                    seasonStatistics.incrementWins(invert);
-                } else if (statistics.getMapResult().equals(MapResult.LOSS)) {
-                    seasonStatistics.incrementLosses(invert);
-                }
-
-                seasonStatistics.incrementRoundsWon(handleInversion(statistics.getRoundsWon(), invert));
-                seasonStatistics.incrementRoundsLost(handleInversion(statistics.getRoundsLost(), invert));
+            if (seasonStatistics == null) {
+                seasonStatistics = new SquadSeasonStatistics(season, 0, 0, 0, 0);
+                Set<SquadSeasonStatistics> set = statistics.getSquad().getSquadSeasons();
+                set.add(seasonStatistics);
+                statistics.getSquad().setSquadSeasons(set);
 
                 this.squadSeasonStatisticsRepository.save(seasonStatistics);
+                save(statistics.getSquad());
             }
+
+            if (statistics.getMapResult().equals(MapResult.WIN)) {
+                seasonStatistics.incrementWins(invert);
+            } else if (statistics.getMapResult().equals(MapResult.LOSS)) {
+                seasonStatistics.incrementLosses(invert);
+            }
+
+            seasonStatistics.incrementRoundsWon(handleInversion(statistics.getRoundsWon(), invert));
+            seasonStatistics.incrementRoundsLost(handleInversion(statistics.getRoundsLost(), invert));
+
+            this.squadSeasonStatisticsRepository.save(seasonStatistics);
         }
     }
 

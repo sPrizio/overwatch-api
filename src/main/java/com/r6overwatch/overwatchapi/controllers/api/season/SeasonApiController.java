@@ -114,4 +114,32 @@ public class SeasonApiController extends AbstractOverwatchController<SeasonResou
         LOGGER.error("One or more of the required params was null or empty: year {}, number {}", year, number);
         return new StandardJsonResponse(false, null, "One or more of the required params was null or empty: year " + year + ", number " + number);
     }
+
+
+    //  *************** POST ***************
+
+    /**
+     * Starts a new {@link Season}
+     *
+     * @param name new {@link Season}'s name
+     * @return {@link SeasonResource}
+     */
+    @PostMapping("/start-new-season")
+    @ApiOperation("Starts a new season")
+    public StandardJsonResponse startNewSeason(final @RequestParam("name") @ApiParam("Name of the new season") String name) {
+
+        if (StringUtils.isNotEmpty(name)) {
+            SeasonResource resource = this.seasonFacade.startNewSeason(name);
+
+            if (resource.isPresent()) {
+                return new StandardJsonResponse(true, resource, StringUtils.EMPTY);
+            }
+
+            LOGGER.error("Season could not be started, refer to logs");
+            return new StandardJsonResponse(false, null, "A new season could not be started");
+        }
+
+        LOGGER.error("The required param 'name' was null or empty");
+        return new StandardJsonResponse(false, null, "The required param 'name' was null or empty");
+    }
 }

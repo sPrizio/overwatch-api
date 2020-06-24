@@ -12,10 +12,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -75,7 +72,7 @@ public class SquadConverter implements PlayersConverter<Squad, SquadResource> {
             resource.setCode(entity.getId());
             resource.setName(entity.getName());
             resource.setPlayers(Sets.newTreeSet(this.playerConverter.convertAll(entity.getPlayers())));
-            resource.setSquadSeasons(Sets.newHashSet(this.squadSeasonStatisticsConverter.convertAll(entity.getSquadSeasons())));
+            resource.setSquadSeasons(new TreeSet<>(this.squadSeasonStatisticsConverter.convertAll(entity.getSquadSeasons())));
             resource.setMostRecentSeason(this.seasonConverter.convert(entity.getMostRecentSeason()));
             resource.setCurrentSeason(this.squadSeasonStatisticsConverter.convert(entity.getCurrentSeason()));
         }

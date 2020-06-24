@@ -55,14 +55,14 @@ public class UIController {
     public String squad(final @PathVariable("id") Long id, final Model model) {
         model.addAttribute("squad", this.squadFacade.find(id));
         model.addAttribute("currentSeason", this.seasonFacade.getCurrentSeason());
-        model.addAttribute("recentGames", this.gameFacade.findGamesBySquadAndSeasonSortedByDate(1L, 17L, 10));
+        model.addAttribute("recentGames", this.gameFacade.findGamesBySquadAndSeasonSortedByDate(1L, 21L, 10));
 
         return "squad";
     }
 
     @GetMapping("/maps")
     public String maps(final Model model) {
-        model.addAttribute("mapDetails", this.mapFacade.findMapDetailsForSquad(1L, 17L));
+        model.addAttribute("mapDetails", this.mapFacade.findMapDetailsForSquad(1L, 21L));
         model.addAttribute("squad", this.squadFacade.find(1L));
 
         return "maps";

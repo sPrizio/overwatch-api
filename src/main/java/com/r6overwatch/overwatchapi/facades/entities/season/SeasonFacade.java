@@ -32,6 +32,22 @@ public class SeasonFacade implements OverwatchFacade<SeasonResource> {
     //  METHODS
 
     /**
+     * Starts a new {@link Season}
+     *
+     * @param seasonName name of new season
+     * @return newly created {@link Season} as a {@link SeasonResource}
+     */
+    public SeasonResource startNewSeason(String seasonName) {
+
+        Optional<Season> newSeason = this.seasonService.startNewSeason(seasonName);
+        if (newSeason.isPresent()) {
+            return this.seasonConverter.convert(newSeason.get());
+        }
+
+        return new SeasonResource();
+    }
+
+    /**
      * Obtains a {@link SeasonResource} who's season year and season number match the given input
      * Examples of inputs would be 5, 1 for Y5 S1
      *

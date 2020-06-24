@@ -1,6 +1,5 @@
 package com.r6overwatch.overwatchapi.converters.entities.players.statistics;
 
-import com.google.common.collect.Sets;
 import com.r6overwatch.overwatchapi.converters.entities.OverwatchConverter;
 import com.r6overwatch.overwatchapi.converters.entities.players.impl.SquadConverter;
 import com.r6overwatch.overwatchapi.models.entities.players.statistics.SquadGameStatistics;
