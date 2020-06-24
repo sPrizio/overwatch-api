@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 /**
  * A DTO for {@link SquadSeasonStatistics}
  *
@@ -14,7 +16,7 @@ import lombok.Setter;
  * @version 1.0
  */
 @NoArgsConstructor
-public class SquadSeasonStatisticsResource implements OverwatchResource {
+public class SquadSeasonStatisticsResource implements OverwatchResource, Comparable<SquadSeasonStatisticsResource> {
 
     @Getter
     @Setter
@@ -66,5 +68,25 @@ public class SquadSeasonStatisticsResource implements OverwatchResource {
                 this.roundsWon != null &&
                 this.roundsLost != null &&
                 this.differential != null;
+    }
+
+    @Override
+    public int compareTo(SquadSeasonStatisticsResource o) {
+        String seasonString = this.season.getSeasonYear().toString() + this.season.getSeasonNumber().toString();
+        String thatString = o.getSeason().getSeasonYear().toString() + o.getSeason().getSeasonNumber().toString();
+        return seasonString.compareTo(thatString);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SquadSeasonStatisticsResource that = (SquadSeasonStatisticsResource) o;
+        return this.code.equals(that.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.code);
     }
 }
