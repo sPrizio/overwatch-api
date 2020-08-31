@@ -59,7 +59,7 @@
 </section>
 
 <div class="container">
-    <small>As of June 24<sup>th</sup>, 2020</small>
+    <small>As of August 8<sup>th</sup>, 2020</small>
     <br />
     <table class="table is-fullwidth is-hoverable">
         <thead>

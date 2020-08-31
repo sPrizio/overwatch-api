@@ -1,0 +1,270 @@
+{
+  "games": [
+    {
+      "seasonId": 21,
+      "mapId": 19,
+      "gameDateTime": "2020-07-14 20:30:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "BLUE",
+        "mapResult": "LOSS",
+        "roundsWon": 1,
+        "roundsLost": 4,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 1670,
+            "kills": 9,
+            "assists": 0,
+            "deaths": 4
+          },
+          {
+            "playerId": 2,
+            "score": 1075,
+            "kills": 1,
+            "assists": 1,
+            "deaths": 4
+          },
+          {
+            "playerId": 3,
+            "score": 775,
+            "kills": 0,
+            "assists": 0,
+            "deaths": 4
+          }
+        ]
+      }
+    },
+    {
+      "seasonId": 21,
+      "mapId": 5,
+      "gameDateTime": "2020-07-14 21:00:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "LOSS",
+        "roundsWon": 4,
+        "roundsLost": 5,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 2737,
+            "kills": 6,
+            "assists": 2,
+            "deaths": 4
+          },
+          {
+            "playerId": 2,
+            "score": 2370,
+            "kills": 4,
+            "assists": 4,
+            "deaths": 8
+          },
+          {
+            "playerId": 3,
+            "score": 2465,
+            "kills": 4,
+            "assists": 2,
+            "deaths": 6
+          },
+          {
+            "playerId": 4,
+            "score": 2400,
+            "kills": 5,
+            "assists": 4,
+            "deaths": 7
+          },
+          {
+            "playerId": 5,
+            "score": 2931,
+            "kills": 10,
+            "assists": 2,
+            "deaths": 3
+          }
+        ]
+      }
+    },
+    {
+      "seasonId": 21,
+      "mapId": 17,
+      "gameDateTime": "2020-07-14 21:30:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "WIN",
+        "roundsWon": 5,
+        "roundsLost": 4,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 4146,
+            "kills": 4,
+            "assists": 2,
+            "deaths": 6
+          },
+          {
+            "playerId": 2,
+            "score": 4931,
+            "kills": 10,
+            "assists": 1,
+            "deaths": 6
+          },
+          {
+            "playerId": 3,
+            "score": 4565,
+            "kills": 10,
+            "assists": 0,
+            "deaths": 5
+          },
+          {
+            "playerId": 4,
+            "score": 4240,
+            "kills": 5,
+            "assists": 4,
+            "deaths": 8
+          },
+          {
+            "playerId": 5,
+            "score": 4301,
+            "kills": 3,
+            "assists": 4,
+            "deaths": 6
+          }
+        ]
+      }
+    },
+    {
+      "seasonId": 21,
+      "mapId": 1,
+      "gameDateTime": "2020-07-14 22:00:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "WIN",
+        "roundsWon": 4,
+        "roundsLost": 2,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 4195,
+            "kills": 5,
+            "assists": 3,
+            "deaths": 2
+          },
+          {
+            "playerId": 2,
+            "score": 4304,
+            "kills": 8,
+            "assists": 2,
+            "deaths": 3
+          },
+          {
+            "playerId": 3,
+            "score": 3670,
+            "kills": 3,
+            "assists": 2,
+            "deaths": 4
+          },
+          {
+            "playerId": 4,
+            "score": 3760,
+            "kills": 5,
+            "assists": 3,
+            "deaths": 5
+          },
+          {
+            "playerId": 5,
+            "score": 4136,
+            "kills": 4,
+            "assists": 4,
+            "deaths": 2
+          }
+        ]
+      }
+    },
+    {
+      "seasonId": 21,
+      "mapId": 4,
+      "gameDateTime": "2020-07-14 22:30:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "LOSS",
+        "roundsWon": 1,
+        "roundsLost": 4,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 1810,
+            "kills": 4,
+            "assists": 0,
+            "deaths": 4
+          },
+          {
+            "playerId": 2,
+            "score": 1387,
+            "kills": 0,
+            "assists": 2,
+            "deaths": 5
+          },
+          {
+            "playerId": 3,
+            "score": 2257,
+            "kills": 3,
+            "assists": 3,
+            "deaths": 5
+          },
+          {
+            "playerId": 4,
+            "score": 2266,
+            "kills": 7,
+            "assists": 0,
+            "deaths": 3
+          }
+        ]
+      }
+    },
+    {
+      "seasonId": 21,
+      "mapId": 11,
+      "gameDateTime": "2020-07-14 23:00:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "LOSS",
+        "roundsWon": 3,
+        "roundsLost": 5,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 2320,
+            "kills": 6,
+            "assists": 2,
+            "deaths": 6
+          },
+          {
+            "playerId": 2,
+            "score": 2113,
+            "kills": 8,
+            "assists": 0,
+            "deaths": 5
+          },
+          {
+            "playerId": 3,
+            "score": 1765,
+            "kills": 4,
+            "assists": 1,
+            "deaths": 7
+          },
+          {
+            "playerId": 4,
+            "score": 1250,
+            "kills": 1,
+            "assists": 1,
+            "deaths": 8
+          }
+        ]
+      }
+    }
+  ]
+}

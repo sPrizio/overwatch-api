@@ -1,0 +1,214 @@
+{
+  "games": [
+    {
+      "seasonId": 21,
+      "mapId": 17,
+      "gameDateTime": "2020-08-10 20:30:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "LOSS",
+        "roundsWon": 0,
+        "roundsLost": 4,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 752,
+            "kills": 2,
+            "assists": 0,
+            "deaths": 4
+          },
+          {
+            "playerId": 2,
+            "score": 1002,
+            "kills": 4,
+            "assists": 0,
+            "deaths": 4
+          },
+          {
+            "playerId": 3,
+            "score": 745,
+            "kills": 1,
+            "assists": 1,
+            "deaths": 4
+          },
+          {
+            "playerId": 4,
+            "score": 780,
+            "kills": 0,
+            "assists": 2,
+            "deaths": 4
+          }
+        ]
+      }
+    },
+    {
+      "seasonId": 21,
+      "mapId": 19,
+      "gameDateTime": "2020-08-10 21:00:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "LOSS",
+        "roundsWon": 1,
+        "roundsLost": 4,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 1300,
+            "kills": 3,
+            "assists": 1,
+            "deaths": 5
+          },
+          {
+            "playerId": 2,
+            "score": 1450,
+            "kills": 5,
+            "assists": 1,
+            "deaths": 4
+          },
+          {
+            "playerId": 3,
+            "score": 860,
+            "kills": 2,
+            "assists": 0,
+            "deaths": 3
+          },
+          {
+            "playerId": 4,
+            "score": 1052,
+            "kills": 2,
+            "assists": 0,
+            "deaths": 4
+          }
+        ]
+      }
+    },
+    {
+      "seasonId": 21,
+      "mapId": 12,
+      "gameDateTime": "2020-08-10 21:30:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "LOSS",
+        "roundsWon": 3,
+        "roundsLost": 5,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 2225,
+            "kills": 9,
+            "assists": 1,
+            "deaths": 6
+          },
+          {
+            "playerId": 2,
+            "score": 2455,
+            "kills": 9,
+            "assists": 3,
+            "deaths": 6
+          },
+          {
+            "playerId": 3,
+            "score": 85,
+            "kills": 0,
+            "assists": 0,
+            "deaths": 0
+          },
+          {
+            "playerId": 4,
+            "score": 1855,
+            "kills": 5,
+            "assists": 1,
+            "deaths": 5
+          }
+        ]
+      }
+    },
+    {
+      "seasonId": 21,
+      "mapId": 13,
+      "gameDateTime": "2020-08-10 22:00:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "LOSS",
+        "roundsWon": 3,
+        "roundsLost": 5,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 1687,
+            "kills": 6,
+            "assists": 0,
+            "deaths": 6
+          },
+          {
+            "playerId": 2,
+            "score": 1840,
+            "kills": 6,
+            "assists": 3,
+            "deaths": 7
+          },
+          {
+            "playerId": 3,
+            "score": 1865,
+            "kills": 5,
+            "assists": 3,
+            "deaths": 6
+          },
+          {
+            "playerId": 4,
+            "score": 1100,
+            "kills": 1,
+            "assists": 2,
+            "deaths": 6
+          }
+        ]
+      }
+    },
+    {
+      "seasonId": 21,
+      "mapId": 4,
+      "gameDateTime": "2020-08-13 22:30:00",
+      "squadGameStatistics": {
+        "squadId": 1,
+        "gameSide": "ORANGE",
+        "mapResult": "LOSS",
+        "roundsWon": 1,
+        "roundsLost": 4,
+        "playerGameStatistics": [
+          {
+            "playerId": 1,
+            "score": 1089,
+            "kills": 2,
+            "assists": 0,
+            "deaths": 4
+          },
+          {
+            "playerId": 2,
+            "score": 1420,
+            "kills": 5,
+            "assists": 1,
+            "deaths": 4
+          },
+          {
+            "playerId": 3,
+            "score": 1315,
+            "kills": 2,
+            "assists": 2,
+            "deaths": 4
+          },
+          {
+            "playerId": 4,
+            "score": 1181,
+            "kills": 3,
+            "assists": 0,
+            "deaths": 5
+          }
+        ]
+      }
+    }
+  ]
+}

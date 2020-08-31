@@ -59,7 +59,7 @@
 
 <div class="container">
     <h1 class="subtitle">Season: ${season.name}</h1>
-    <small>As of June 24<sup>th</sup>, 2020</small>
+    <small>As of August 8<sup>th</sup>, 2020</small>
     <table class="table is-fullwidth is-hoverable">
         <thead>
         <tr>
