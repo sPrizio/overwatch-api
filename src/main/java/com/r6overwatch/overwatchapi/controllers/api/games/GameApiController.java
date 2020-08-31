@@ -15,14 +15,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Controller that exposes various endpoints for information about {@link Game}
@@ -177,6 +177,50 @@ public class GameApiController extends AbstractOverwatchController<GameResource>
 
         LOGGER.error("Validation failed with message {}", result.getMessage());
         return new StandardJsonResponse(false, null, result.getMessage());
+    }
+
+    /**
+     * Creates multiple new {@link Game} in the system
+     *
+     * @param params request params containing information for multiple new {@link Game}
+     * @return newly created {@link Game}
+     */
+    @PostMapping(value = "/enter-all")
+    @ApiOperation("Creates new game(s) for the given request body. Creating a game also updates all statistical information associated with the given players and squad(s)")
+    public StandardJsonResponse enterAllGames(final @RequestBody Map<String, Object> params) {
+
+        List<Map<String, Object>> games;
+        if (MapUtils.isNotEmpty(params) && params.containsKey("games")) {
+            games = (List<Map<String, Object>>) params.get("games");
+        } else {
+            return new StandardJsonResponse(false, null, "No games were provided");
+        }
+
+        Set<Integer> failed = new TreeSet<>();
+        Set<Integer> success = new TreeSet<>();
+        for (int i = 0; i < games.size(); i++) {
+            ValidationResult result = this.gameValidator.validate(games.get(i));
+
+            if (result.isValid()) {
+                GameResource resource = this.gameFacade.create(games.get(i));
+
+                if (resource != null) {
+                    success.add(i);
+                } else {
+                    LOGGER.error("The game at index {} could not be created", i);
+                    failed.add(i);
+                }
+            } else {
+                LOGGER.error("Validation failed with message {} for game at index {}", result.getMessage(), i);
+                failed.add(i);
+            }
+        }
+
+        if (CollectionUtils.isNotEmpty(failed)) {
+            return new StandardJsonResponse(false, null, "One or more games failed to be created: " + failed);
+        }
+
+        return new StandardJsonResponse(true, null, success.size() + " games created successfully");
     }
 
 
